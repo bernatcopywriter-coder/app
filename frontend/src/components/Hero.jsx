@@ -60,10 +60,10 @@ export default function Hero() {
                 <RevealLines
                     as="h1"
                     lines={[
-                        'Steel, Laser Cutting',
+                        'Steel, Laser Cutting ',
                         <span key="l2">
                             &amp; Fabrication{' '}
-                            <span className="text-brand italic font-normal">Without</span>
+                            <span className="text-brand italic font-normal">Without</span>{' '}
                         </span>,
                         <span key="l3">
                             the <span className="text-outline">Usual Hassle</span>.
