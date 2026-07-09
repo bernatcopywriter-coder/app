@@ -4,10 +4,11 @@ import QuoteForm from '@/components/QuoteForm';
 import { CONTACT } from '@/lib/constants';
 
 const TRUST_POINTS = [
-    'Quotes usually returned inside a working day',
-    'Vetted UK supplier network across every process',
-    'One person owns your job from enquiry to delivery',
-    'PDF, DXF, DWG, STEP, STL and images — all accepted',
+    'Access to laser cutting, tube laser, waterjet, flame, plasma, folding, welding, fabrication and finishing',
+    'Vetted UK supplier network — jobs matched to the right process and shop',
+    'One person owns the enquiry from drawing to delivery',
+    'PDF, DXF, DWG, STEP, STL, images and ZIP packs — all accepted',
+    'Useful as a backup, second-quote or main supplier',
 ];
 
 export default function Quote() {
@@ -15,9 +16,9 @@ export default function Quote() {
         <div data-testid="quote-page">
             <PageHero
                 overline="Request a Quote"
-                title={['Send us the job.', 'Get a clear price.']}
-                subtitle="Fill in what you can. If you only have a drawing and a delivery date — that&#39;s enough to get started. We&#39;ll come back with anything we need to clarify."
-                image="https://images.pexels.com/photos/17180807/pexels-photo-17180807.jpeg"
+                title={['Send us the job.', 'We’ll source', 'the right route.']}
+                subtitle="Send your drawings and we’ll help source the right process, price and supplier route for the job. If you only have a drawing and a delivery date — that’s enough to get started."
+                image="https://images.unsplash.com/photo-1581093806997-124204d9fa9d"
             />
 
             <section className="py-16 sm:py-24 bg-bg-0 border-b border-line">

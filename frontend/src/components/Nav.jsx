@@ -37,10 +37,14 @@ export default function Nav() {
                     <Link
                         to="/"
                         data-testid="nav-logo"
-                        className="group flex items-center gap-2 font-display uppercase tracking-tight text-ink"
+                        className="group flex items-center gap-3 font-display uppercase tracking-tight text-ink"
                     >
-                        <span className="inline-block w-2.5 h-2.5 rotate-45 bg-brand" />
-                        <span className="text-[18px] font-semibold">Bernat Solutions</span>
+                        <img
+                            src="/favicon.png"
+                            alt="Bernat Solutions"
+                            className="w-8 h-8 object-contain"
+                        />
+                        <span className="text-[17px] font-semibold leading-none">Bernat Solutions</span>
                     </Link>
 
                     <nav className="hidden md:flex items-center gap-8">

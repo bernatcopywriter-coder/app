@@ -5,12 +5,12 @@ const BLOCKS = [
     {
         icon: Zap,
         title: 'Built for Busy Buyers',
-        text: 'For companies that need reliable pricing, fast communication, and fewer headaches when sourcing metalwork. We keep the loop short.',
+        text: 'For companies that need reliable pricing, wider supplier capability and fewer headaches when sourcing metalwork. One person owns the enquiry.',
     },
     {
         icon: ShieldCheck,
         title: 'A Better Backup Supplier',
-        text: 'When your current supplier is overloaded, slow to respond, or you just need another price to compare — send it over. No commitment, no fuss.',
+        text: 'When your current supplier is overloaded, slow to respond, or can’t handle the full job — send the drawings across. No commitment, no fuss.',
     },
     {
         icon: MessageSquare,
@@ -30,8 +30,8 @@ export default function TrustBlocks() {
                     <span className="inline-block w-6 h-px bg-brand mr-3 align-middle" />
                     Trust
                 </div>
-                <h2 className="h-display text-[clamp(2rem,5.5vw,4.5rem)] text-ink max-w-[20ch] mb-16">
-                    A better way to source metalwork.
+                <h2 className="h-display text-[clamp(2rem,5.5vw,4.5rem)] text-ink max-w-[24ch] mb-16">
+                    A better way to source cutting, fabrication and finishing.
                 </h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-line">

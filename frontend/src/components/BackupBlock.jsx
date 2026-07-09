@@ -19,11 +19,11 @@ export default function BackupBlock() {
                 >
                     <div className="overline brand mb-5">
                         <span className="inline-block w-6 h-px bg-brand mr-3 align-middle" />
-                        A Backup You Can Trust
+                        One Point of Contact
                     </div>
                     <h2 className="h-display text-[clamp(2rem,6vw,5rem)] text-ink leading-[0.95]">
-                        Need a backup <br />
-                        <span className="text-brand italic font-normal">supplier?</span>
+                        Stop chasing<br />
+                        <span className="text-brand italic font-normal">suppliers.</span>
                     </h2>
                 </motion.div>
 
@@ -35,9 +35,11 @@ export default function BackupBlock() {
                     className="lg:col-span-6 lg:col-start-7"
                 >
                     <p className="text-lg md:text-xl text-ink-2 leading-relaxed">
-                        When your usual supplier is too busy, slow to quote, or can&apos;t
-                        turn work around quickly — Bernat Solutions gives you another
-                        reliable option. Same drawings, same standards, straight answers.
+                        Instead of chasing separate suppliers for cutting, folding, welding,
+                        finishing and delivery, Bernat Solutions gives you one clear point of
+                        contact. We review the job, understand the drawings, source the right
+                        process, request pricing and keep the enquiry moving from quote to
+                        delivery.
                     </p>
 
                     <div className="mt-10 flex flex-wrap items-center gap-6">
@@ -46,12 +48,12 @@ export default function BackupBlock() {
                             data-testid="backup-cta"
                             className="btn-fill inline-flex items-center gap-2 px-6 py-3 border border-line-strong text-ink text-sm font-semibold uppercase tracking-wider hover:text-white"
                         >
-                            Get a Second Quote
+                            Send Us the Job
                             <ArrowUpRight size={16} />
                         </Link>
                         <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-ink-3">
                             <span className="w-2 h-2 rotate-45 bg-brand" />
-                            Typical quote turnaround — 1 working day
+                            Useful as a backup or main supplier
                         </div>
                     </div>
                 </motion.div>

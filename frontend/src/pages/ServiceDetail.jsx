@@ -60,7 +60,7 @@ export default function ServiceDetail() {
                         <div className="relative overflow-hidden border border-line-strong aspect-[3/4]">
                             <img
                                 src={service.image}
-                                alt={service.title}
+                                alt={service.imageAlt || service.title}
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-bg-0 via-transparent to-transparent" />
@@ -72,6 +72,9 @@ export default function ServiceDetail() {
                                 <div className="text-sm text-ink-2 uppercase tracking-widest mt-1">
                                     {service.strap}
                                 </div>
+                            </div>
+                            <div className="absolute top-4 left-4 right-4 text-[10px] uppercase tracking-widest text-ink-3 bg-bg-0/60 px-2 py-1 border border-line-strong inline-block w-fit">
+                                Representative supplier-network image
                             </div>
                         </div>
                     </div>

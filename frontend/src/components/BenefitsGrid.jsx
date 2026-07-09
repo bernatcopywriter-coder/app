@@ -19,10 +19,10 @@ export default function BenefitsGrid() {
                     >
                         <div className="overline brand mb-5">
                             <span className="inline-block w-6 h-px bg-brand mr-3 align-middle" />
-                            Why Bernat
+                            Why Use Us
                         </div>
-                        <h2 className="h-display text-[clamp(2rem,5.5vw,4.5rem)] text-ink max-w-[16ch]">
-                            Built for buyers who need answers, not chase-ups.
+                        <h2 className="h-display text-[clamp(2rem,5.5vw,4.5rem)] text-ink max-w-[18ch]">
+                            One point of contact. A full supplier network behind it.
                         </h2>
                     </motion.div>
 
@@ -33,9 +33,10 @@ export default function BenefitsGrid() {
                         transition={{ duration: 0.7, delay: 0.1 }}
                         className="lg:col-span-5 text-ink-2 text-lg leading-relaxed"
                     >
-                        Every enquiry is handled by someone who has stood on the shopfloor
-                        and read the drawing themselves. That&apos;s the difference. Six
-                        commitments we make to every job.
+                        Bernat Solutions helps source and manage steelwork through a trusted
+                        UK supplier network — matching every job to the right process,
+                        material and production route. Six commitments we make to every
+                        enquiry.
                     </motion.p>
                 </div>
 

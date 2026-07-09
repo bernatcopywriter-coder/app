@@ -11,8 +11,8 @@ export default function Login() {
     return (
         <div data-testid="login-page" className="min-h-screen bg-bg-0 flex flex-col">
             <div className="container-x py-6 flex justify-between items-center border-b border-line">
-                <Link to="/" className="flex items-center gap-2 font-display uppercase tracking-tight">
-                    <span className="inline-block w-2.5 h-2.5 rotate-45 bg-brand" />
+                <Link to="/" className="flex items-center gap-3 font-display uppercase tracking-tight">
+                    <img src="/favicon.png" alt="Bernat Solutions" className="w-7 h-7 object-contain" />
                     <span className="text-lg font-semibold text-ink">Bernat Solutions</span>
                 </Link>
                 <Link

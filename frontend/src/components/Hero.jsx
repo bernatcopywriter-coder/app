@@ -54,7 +54,7 @@ export default function Hero() {
                     className="flex items-center gap-3 overline brand mb-8"
                 >
                     <span className="inline-block w-8 h-px bg-brand" />
-                    <span>UK Steel · Laser · Fabrication</span>
+                    <span>UK Supplier Network · Cutting · Fabrication · Finishing</span>
                 </motion.div>
 
                 <RevealLines
@@ -81,10 +81,10 @@ export default function Hero() {
                         transition={{ delay: 0.9, duration: 0.7 }}
                         className="lg:col-span-6 text-ink-2 text-lg sm:text-xl leading-relaxed max-w-[52ch]"
                     >
-                        Bernat Solutions helps UK businesses get reliable quotes, clear
-                        communication and quality steelwork — delivered through a trusted
-                        supplier network built for busy engineering, construction and
-                        manufacturing teams.
+                        Bernat Solutions helps UK businesses source and manage laser cutting,
+                        steel profiling, folding, fabrication and finishing work through a
+                        trusted supplier network. Send your drawings, tell us what you need,
+                        and we&apos;ll help get the job quoted and moving.
                     </motion.p>
 
                     <motion.div

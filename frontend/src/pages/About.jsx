@@ -8,22 +8,22 @@ const VALUES = [
     {
         n: '01',
         title: 'Shopfloor eyes',
-        text: 'Every enquiry is read by someone who has actually run a laser cutter and a press brake — so the quote reflects the real job, not a checkbox.',
+        text: 'Every enquiry is read by someone who has actually stood beside a laser and a press brake — so the quote reflects the real job, not a checkbox.',
     },
     {
         n: '02',
         title: 'Straight talk',
-        text: 'If a job needs tweaking to make it cheaper or faster, we say so. If something is going to slip, we say so before you have to ask.',
+        text: 'If a job needs tweaking to cut cost or speed up delivery, we say so. If something is going to slip, we say so before you have to ask.',
     },
     {
         n: '03',
         title: 'One point of contact',
-        text: 'No account manager relay. You email one person, that person owns your job through to delivery.',
+        text: 'No account manager relay. You email one person, that person owns the enquiry from drawing to delivery — cutting, folding, finishing and all.',
     },
     {
         n: '04',
         title: 'Lean by design',
-        text: 'A lean, sharp operation means quicker quotes, better prices and fewer people to lose the plot in the middle.',
+        text: 'A lean, sharp operation with a strong UK supplier network. Faster quotes, better fit for the job, fewer people to lose the plot in the middle.',
     },
 ];
 
@@ -33,8 +33,8 @@ export default function About() {
             <PageHero
                 overline="About"
                 title={['Built on the', 'shopfloor.', 'Sharpened for buyers.']}
-                subtitle="Bernat Solutions was built by someone with hands-on experience in laser cutting, press brake work, steel processing, estimating and customer account management — someone who has read the drawings and stood by the machine."
-                image="https://images.unsplash.com/photo-1563083165-32e6c6918e49"
+                subtitle="Bernat Solutions was built from hands-on experience in steel processing, laser cutting, press brake work, estimating, drawings and customer account management. We understand both the shopfloor and the customer side — so enquiries are handled properly, drawings are understood, and communication stays clear."
+                image="https://images.unsplash.com/photo-1567789884554-0b844b597180"
             />
 
             <section className="py-24 sm:py-32 border-b border-line bg-bg-0">
@@ -51,25 +51,27 @@ export default function About() {
                             The Idea
                         </div>
                         <h2 className="h-display text-[clamp(2rem,5vw,4rem)] text-ink mb-8">
-                            A sharper way to source metalwork.
+                            A sharper way to source cutting, fabrication and finishing.
                         </h2>
                         <div className="space-y-6 text-ink-2 text-lg leading-relaxed">
                             <p>
-                                Too many UK buyers know the routine. Send a drawing. Wait
-                                three days. Chase. Then get a quote you can&apos;t quite
-                                make sense of. Bernat Solutions was built to end that
-                                pattern.
+                                Too many UK buyers know the routine. Send a drawing to one
+                                supplier for laser cutting, another for folding, a third for
+                                welding, a fourth for finishing. Wait days for each quote.
+                                Chase. Chase again. Then piece the job together yourself.
+                                Bernat Solutions was built to end that pattern.
                             </p>
                             <p>
-                                We understand both sides — the shopfloor and the customer.
-                                That means enquiries are handled properly, drawings are
-                                actually read, and communication stays clear from the
-                                first email to the final delivery.
+                                We don&apos;t claim to own the machines. What we do is act
+                                as one clear point of contact — sourcing and managing the
+                                right cutting, profiling, fabrication and finishing route
+                                through our UK supplier network. Drawings get read properly,
+                                jobs get matched to the right shop, and communication stays
+                                clear from the first email through to delivery.
                             </p>
                             <p>
-                                We&apos;re not trying to sound huge. We&apos;re lean, sharp
-                                and reliable — a serious backup or main supplier for
-                                companies who want fewer surprises and better answers.
+                                Lean, sharp and reliable — a serious backup or main supplier
+                                for companies who want fewer surprises and better answers.
                             </p>
                         </div>
                     </motion.div>
@@ -77,15 +79,18 @@ export default function About() {
                     <div className="lg:col-span-5 lg:col-start-8">
                         <div className="relative overflow-hidden border border-line-strong aspect-[3/4]">
                             <img
-                                src="https://images.pexels.com/photos/177872/pexels-photo-177872.jpeg"
-                                alt="Welding sparks"
+                                src="https://images.pexels.com/photos/12475054/pexels-photo-12475054.jpeg"
+                                alt="Welding sparks in an industrial workshop — representative supplier-network capability image"
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-bg-0 via-transparent to-transparent" />
+                            <div className="absolute top-4 left-4 text-[10px] uppercase tracking-widest text-ink-3 bg-bg-0/60 px-2 py-1 border border-line-strong">
+                                Representative supplier-network image
+                            </div>
                             <div className="absolute bottom-6 left-6 right-6">
-                                <div className="overline brand mb-1">Since 2024</div>
+                                <div className="overline brand mb-1">UK-wide</div>
                                 <div className="h-display text-3xl text-ink">
-                                    Nottinghamshire based · UK-wide
+                                    Nottinghamshire based · UK supplier network
                                 </div>
                             </div>
                         </div>

@@ -135,8 +135,8 @@ export default function Admin() {
             {/* Admin nav */}
             <header className="sticky top-0 z-40 border-b border-line bg-bg-0/90 backdrop-blur-xl">
                 <div className="container-x flex items-center justify-between h-16">
-                    <Link to="/" className="flex items-center gap-2">
-                        <span className="inline-block w-2.5 h-2.5 rotate-45 bg-brand" />
+                    <Link to="/" className="flex items-center gap-3">
+                        <img src="/favicon.png" alt="Bernat Solutions" className="w-7 h-7 object-contain" />
                         <span className="font-display uppercase tracking-tight text-lg">
                             Bernat Solutions <span className="text-ink-3">/ Admin</span>
                         </span>

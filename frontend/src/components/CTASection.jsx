@@ -35,8 +35,9 @@ export default function CTASection() {
                         <span className="text-outline-brand">We&apos;ll do the rest.</span>
                     </h2>
                     <p className="mt-8 text-ink-2 text-lg md:text-xl max-w-2xl leading-relaxed">
-                        PDF, DXF, DWG, STEP or even a phone photo of a sketch — send it
-                        across and we&apos;ll come back with a clear price and lead time.
+                        PDF, DXF, DWG, STEP, STL or a phone photo of a sketch — send it
+                        across and we&apos;ll source the right process, price and supplier
+                        route for the job.
                     </p>
 
                     <div className="mt-12 flex flex-wrap gap-4">

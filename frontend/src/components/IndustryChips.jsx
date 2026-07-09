@@ -43,7 +43,7 @@ export default function IndustryChips() {
                     >
                         From one-off maintenance parts to repeat production batches — Bernat
                         Solutions supports engineering, construction, manufacturing and
-                        specialist trades across the UK.
+                        specialist trades across the UK through our supplier network.
                     </motion.p>
                 </div>
 

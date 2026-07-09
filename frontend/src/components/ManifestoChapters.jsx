@@ -14,9 +14,14 @@ export default function ManifestoChapters() {
                     <span className="inline-block w-6 h-px bg-brand mr-3 align-middle" />
                     A Simple Process
                 </div>
-                <h2 className="h-display text-[clamp(2rem,5.5vw,4.5rem)] text-ink max-w-[20ch]">
+                <h2 className="h-display text-[clamp(2rem,5.5vw,4.5rem)] text-ink max-w-[22ch]">
                     Four steps between your drawing and finished parts.
                 </h2>
+                <p className="mt-6 max-w-2xl text-ink-2 text-lg leading-relaxed">
+                    We act as one point of contact for quoting, communication and job
+                    management — from the moment a drawing lands with us to the day the
+                    parts arrive.
+                </p>
             </div>
 
             <div className="container-x pb-24">

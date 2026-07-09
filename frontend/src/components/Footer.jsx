@@ -8,15 +8,20 @@ export default function Footer() {
             <div className="container-x pt-24 pb-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
                     <div className="lg:col-span-5">
-                        <div className="flex items-center gap-2 mb-6">
-                            <span className="inline-block w-3 h-3 rotate-45 bg-brand" />
+                        <div className="flex items-center gap-3 mb-6">
+                            <img
+                                src="/favicon.png"
+                                alt="Bernat Solutions"
+                                className="w-10 h-10 object-contain"
+                            />
                             <span className="font-display text-2xl uppercase tracking-tight">
                                 Bernat Solutions
                             </span>
                         </div>
                         <p className="text-ink-2 max-w-md text-base leading-relaxed">
-                            Steel, laser cutting and fabrication support for UK businesses. Send
-                            drawings, receive a clear quote, and let us manage the work.
+                            Steel, laser cutting, profiling, fabrication and finishing support
+                            for UK businesses. One point of contact for quoting, sourcing and
+                            job management — through a trusted UK supplier network.
                         </p>
 
                         <Link

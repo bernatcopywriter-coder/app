@@ -30,7 +30,7 @@ export default function Contact() {
         try {
             await submitContact(state);
             setDone(true);
-            toast.success('Message sent. Thanks — we&#39;ll be in touch.');
+            toast.success('Message sent. Thanks — we’ll be in touch.');
             setState({ name: '', email: '', phone: '', company: '', message: '', honeypot: '' });
         } catch (err) {
             toast.error(err?.response?.data?.detail || 'Could not send. Please email us directly.');
@@ -149,7 +149,7 @@ export default function Contact() {
                                         onChange={set('message')}
                                         required
                                         data-testid="cf-message"
-                                        placeholder="Tell us what you&#39;re looking to source or ask a question…"
+                                        placeholder="Tell us what you’re looking to source or ask a question…"
                                         className="w-full bg-bg-0 border border-line-strong text-ink px-4 py-3 outline-none focus:border-brand transition-colors leading-relaxed"
                                     />
                                 </div>

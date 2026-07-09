@@ -2,17 +2,24 @@ import Marquee from 'react-fast-marquee';
 
 const ITEMS = [
     'Laser Cutting',
-    'Folding',
+    'Tube & Section',
+    'Waterjet',
+    'Flame Cutting',
+    'Plasma',
+    'Bevel & Weld Prep',
+    'Press Brake',
     'Welding',
     'Fabrication',
-    'Finishing',
-    'Steel Supply',
+    'Deburring',
+    'Shot Blasting',
+    'Laser Etching',
+    'Countersinking',
+    'Tapping',
     'Powder Coating',
-    'Galvanising',
-    'Sheet Metal',
-    'Structural',
-    'Prototype',
-    'Batch Work',
+    'Painting',
+    'Polishing',
+    'Plating',
+    'Material Sourcing',
 ];
 
 export default function EditorialMarquee() {
@@ -25,7 +32,7 @@ export default function EditorialMarquee() {
                 {ITEMS.map((item, i) => (
                     <span key={`${item}-${i}`} className="marquee-item">
                         <span
-                            className="font-display text-[9vw] leading-none uppercase tracking-tight text-outline"
+                            className="font-display text-[7vw] leading-none uppercase tracking-tight text-outline"
                         >
                             {item}
                         </span>

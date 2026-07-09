@@ -21,6 +21,10 @@ export default function ServicesShowcase() {
                             One point of contact.<br />
                             <span className="text-outline">Every process covered.</span>
                         </h2>
+                        <p className="mt-6 max-w-xl text-ink-2 text-base leading-relaxed">
+                            Cutting, profiling, folding, fabrication and finishing —
+                            sourced and managed through our UK supplier network.
+                        </p>
                     </div>
                     <Link
                         to="/services"
@@ -54,7 +58,7 @@ export default function ServicesShowcase() {
                                 <div className="relative overflow-hidden aspect-[4/5]">
                                     <img
                                         src={s.image}
-                                        alt={s.title}
+                                        alt={s.imageAlt || s.title}
                                         loading="lazy"
                                         className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-[filter,transform] duration-[900ms] ease-out"
                                     />

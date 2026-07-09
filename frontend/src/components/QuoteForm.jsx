@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import {
     Upload, X, Loader2, FileText, ArrowUpRight, Check,
 } from 'lucide-react';
-import { PROCESS_OPTIONS } from '@/lib/constants';
+import { PROCESS_OPTIONS, MATERIAL_OPTIONS } from '@/lib/constants';
 import { submitQuote } from '@/lib/api';
 
 const initial = {
@@ -23,15 +23,7 @@ const initial = {
     honeypot: '',
 };
 
-const MATERIALS = [
-    'Mild Steel',
-    'Stainless Steel',
-    'Aluminium',
-    'Galvanised',
-    'Brass',
-    'Copper',
-    'Other',
-];
+const MATERIALS = MATERIAL_OPTIONS;
 
 const LEAD_TIMES = [
     'ASAP / Urgent',
@@ -200,11 +192,15 @@ export default function QuoteForm() {
                 <div className="flex flex-wrap gap-2.5">
                     {PROCESS_OPTIONS.map((p) => {
                         const active = state.processes.includes(p);
+                        const tid = p
+                            .toLowerCase()
+                            .replace(/[^a-z0-9]+/g, '-')
+                            .replace(/(^-|-$)/g, '');
                         return (
                             <button
                                 type="button"
                                 key={p}
-                                data-testid={`qf-process-${p.toLowerCase().replace(/\s+/g, '-')}`}
+                                data-testid={`qf-process-${tid}`}
                                 onClick={() => toggleProcess(p)}
                                 className={`px-4 py-2 border text-sm transition-colors ${
                                     active
@@ -235,7 +231,7 @@ export default function QuoteForm() {
                     </div>
                     <div className="text-ink font-medium">Drop drawings here or click to upload</div>
                     <div className="text-ink-3 text-sm mt-2">
-                        PDF, DXF, DWG, STEP, STL, images. Up to 8 files, 15MB each.
+                        PDF, DXF, DWG, STEP, STL, images or ZIP drawing packs. Up to 8 files, 15MB each.
                     </div>
                     <input
                         ref={fileRef}
