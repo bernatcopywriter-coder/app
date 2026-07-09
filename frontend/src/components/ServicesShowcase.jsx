@@ -60,7 +60,7 @@ export default function ServicesShowcase() {
                                         src={s.image}
                                         alt={s.imageAlt || s.title}
                                         loading="lazy"
-                                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-[filter,transform] duration-[900ms] ease-out"
+                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-[900ms] ease-out"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-bg-0 via-bg-0/40 to-transparent" />
                                     <div className="absolute top-4 left-4 flex items-center gap-2 overline brand">

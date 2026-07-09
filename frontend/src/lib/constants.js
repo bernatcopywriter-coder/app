@@ -26,9 +26,8 @@ export const SERVICES = [
             'Nested for material efficiency',
             'PDF, DXF, DWG, STEP and images accepted',
         ],
-        image: 'https://images.pexels.com/photos/17180807/pexels-photo-17180807.jpeg',
-        imageAlt:
-            'Industrial fibre laser cutting head cutting a steel sheet — representative supplier-network capability image',
+        image: '/services/laser-flat.jpg',
+        imageAlt: 'Flat sheet laser cutting steel components',
     },
     {
         slug: 'tube-section-cutting',
@@ -45,9 +44,8 @@ export const SERVICES = [
             'Frames, chassis and structural assemblies',
             'Cut-to-length and kitted deliveries',
         ],
-        image: 'https://images.pexels.com/photos/2760242/pexels-photo-2760242.jpeg',
-        imageAlt:
-            'Large steel section being handled inside a heavy industrial factory — representative supplier-network capability image',
+        image: '/services/tube-laser.jpg',
+        imageAlt: 'Tube laser cutting metal section',
     },
     {
         slug: 'heavy-plate-profiling',
@@ -64,9 +62,8 @@ export const SERVICES = [
             'Structural steel, base plates, wear plate, boiler plate',
             'Large-format profiles and one-off components',
         ],
-        image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1',
-        imageAlt:
-            'Welder cutting steel with orange sparks flying — representative supplier-network capability image',
+        image: '/services/waterjet.jpg',
+        imageAlt: 'Heavy plate profiling with waterjet cutting',
     },
     {
         slug: 'folding-fabrication',
@@ -83,9 +80,10 @@ export const SERVICES = [
             'Structural steelwork and custom metalwork',
             'Post-weld dressing and prep for finishing',
         ],
-        image: 'https://images.pexels.com/photos/12951623/pexels-photo-12951623.jpeg',
-        imageAlt:
-            'Industrial CNC press brake and welded steel components — representative supplier-network capability image',
+        image: '/services/folding.jpg',
+        imageAlt: 'Press brake folding sheet metal',
+        secondaryImage: 'https://images.pexels.com/photos/12475054/pexels-photo-12475054.jpeg',
+        secondaryImageAlt: 'Steel fabrication and welding',
     },
     {
         slug: 'finishing-secondary',
@@ -102,9 +100,8 @@ export const SERVICES = [
             'Laser etching, engraving and part marking',
             'Countersinking, flow drilling and tapping',
         ],
-        image: 'https://images.pexels.com/photos/36095234/pexels-photo-36095234.jpeg',
-        imageAlt:
-            'Steel checker plate finished surface — representative supplier-network capability image',
+        image: '/services/powder-coating.jpg',
+        imageAlt: 'Powder coating finished steel components',
     },
 ];
 

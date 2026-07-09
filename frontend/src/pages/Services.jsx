@@ -12,7 +12,7 @@ export default function Services() {
                 overline="Services"
                 title={['A single source', 'for cutting, fabrication', 'and finishing.']}
                 subtitle="Bernat Solutions helps UK businesses source and manage laser cutting, tube and section cutting, heavy plate profiling, folding, fabrication and finishing through a trusted supplier network — quoted and coordinated as one job."
-                image="https://images.pexels.com/photos/17180807/pexels-photo-17180807.jpeg"
+                image="/services/laser-flat.jpg"
             />
             <ServicesShowcase />
             <CapabilitiesStrip />

@@ -45,7 +45,7 @@ export default function Contact() {
                 overline="Contact"
                 title={['Get in touch.']}
                 subtitle="Prefer to send drawings? Head to the quote page. For anything else — email, call, or drop us a message below."
-                image="https://images.pexels.com/photos/12951623/pexels-photo-12951623.jpeg"
+                image="/services/folding.jpg"
             />
 
             <section className="py-24 sm:py-32 bg-bg-0 border-b border-line">

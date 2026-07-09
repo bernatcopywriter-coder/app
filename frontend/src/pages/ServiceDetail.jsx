@@ -73,10 +73,24 @@ export default function ServiceDetail() {
                                     {service.strap}
                                 </div>
                             </div>
-                            <div className="absolute top-4 left-4 right-4 text-[10px] uppercase tracking-widest text-ink-3 bg-bg-0/60 px-2 py-1 border border-line-strong inline-block w-fit">
-                                Representative supplier-network image
-                            </div>
                         </div>
+
+                        {service.secondaryImage && (
+                            <div className="mt-6 relative overflow-hidden border border-line-strong aspect-[4/3]">
+                                <img
+                                    src={service.secondaryImage}
+                                    alt={service.secondaryImageAlt || service.title}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-bg-0/80 via-transparent to-transparent" />
+                                <div className="absolute bottom-4 left-4 right-4">
+                                    <div className="overline brand mb-1">Fabrication</div>
+                                    <div className="h-display text-xl text-ink">
+                                        Welded &amp; assembled steelwork
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </section>
@@ -98,8 +112,8 @@ export default function ServiceDetail() {
                                 <div className="relative aspect-[4/5] overflow-hidden">
                                     <img
                                         src={s.image}
-                                        alt={s.title}
-                                        className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-[filter,transform] duration-700"
+                                        alt={s.imageAlt || s.title}
+                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-bg-0/95 via-bg-0/30 to-transparent" />
                                     <div className="absolute bottom-4 left-4 right-4">
