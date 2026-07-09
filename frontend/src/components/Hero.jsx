@@ -71,6 +71,7 @@ export default function Hero() {
                     ]}
                     className="h-display text-[clamp(2.4rem,9vw,7.5rem)] font-semibold text-ink max-w-[16ch]"
                     lineClassName=""
+                    ariaLabel="Steel, Laser Cutting & Fabrication Without the Usual Hassle."
                 />
 
                 <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">

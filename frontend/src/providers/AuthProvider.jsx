@@ -28,6 +28,14 @@ export function AuthProvider({ children }) {
             setLoading(false);
             return;
         }
+        // Only probe /auth/me on auth-gated routes to keep public pages quiet.
+        if (typeof window !== 'undefined') {
+            const path = window.location.pathname || '/';
+            if (!path.startsWith('/admin')) {
+                setLoading(false);
+                return;
+            }
+        }
         checkAuth();
     }, [checkAuth]);
 

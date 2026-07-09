@@ -12,11 +12,12 @@ export default function RevealLines({
     delay = 0.15,
     stagger = 0.08,
     lineClassName = '',
+    ariaLabel,
 }) {
     return (
-        <Tag className={className}>
+        <Tag className={className} aria-label={ariaLabel}>
             {lines.map((line, i) => (
-                <span key={i} className="reveal-mask">
+                <span key={i} className="reveal-mask" aria-hidden={ariaLabel ? true : undefined}>
                     <motion.span
                         style={{ display: 'block', willChange: 'transform' }}
                         initial={{ y: '110%' }}
