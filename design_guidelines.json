@@ -1,0 +1,191 @@
+{
+  "art_direction_narrative": "The Bernat Solutions brand represents 'Industrial Luxury' and 'High-End Brutalism'. The design breaks away from generic B2B templates, leaning into a bold, architectural, and cinematic direction. It uses deep shadows, raw steel textures, and high-contrast vibrant orange accents to convey reliability, precision, and modern engineering. Motion is a core pillar: deliberate, smooth, and premium, treating the website as a high-end editorial piece rather than just a brochure. The aesthetic is heavy, confident, and unapologetic.",
+  "typography": {
+    "primary": {
+      "family": "Oswald",
+      "category": "sans-serif",
+      "usage": "Headings, hero text, manifestos, large numbers. Selected for its tall, commanding, and rigid industrial structure. All uppercase for maximum impact.",
+      "weights": ["400", "500", "700"]
+    },
+    "secondary": {
+      "family": "Manrope",
+      "category": "sans-serif",
+      "usage": "Body copy, labels, forms, UI elements. Chosen for its clean, geometric, and highly readable nature, contrasting perfectly with the rigid headings.",
+      "weights": ["400", "500", "600"]
+    },
+    "rules": [
+      "H1 should use fluid typography (clamp) up to text-7xl or text-8xl on desktop, with tight tracking (-tracking-tighter) and tight leading (leading-[0.9]).",
+      "Labels/Overlines must be uppercase, tracking-[0.2em], text-xs or text-sm, often in the accent color.",
+      "Body text should be text-lg or text-xl with leading-relaxed."
+    ]
+  },
+  "color_system": {
+    "theme": "dark",
+    "backgrounds": {
+      "primary": "#0A0A0A",
+      "secondary": "#141414",
+      "tertiary": "#1E1E1E"
+    },
+    "text": {
+      "primary": "#F5F5F5",
+      "secondary": "#A3A3A3",
+      "muted": "#737373"
+    },
+    "accents": {
+      "brand_orange": "#FF4500",
+      "brand_orange_hover": "#E63E00",
+      "steel_blue": "#2A3439"
+    },
+    "borders": {
+      "subtle": "#262626",
+      "strong": "#404040"
+    },
+    "rules": [
+      "Never use pure black (#000) or pure white (#FFF). Always tint slightly.",
+      "The accent color (#FF4500) must be used sparingly as a 'laser beam'—for CTAs, active states, and critical data points. Do not oversaturate the layout with it.",
+      "Use #141414 and #1E1E1E for surface elevation, separated by subtle 1px borders (#262626)."
+    ]
+  },
+  "visual_enhancers": {
+    "textures": [
+      "Subtle noise overlay (opacity 2-5%) across the entire background to kill the 'digital flatness'.",
+      "Metal plate or concrete texture used inside large typography or hero masks."
+    ],
+    "shadows": [
+      "Avoid soft, diffuse drop shadows. Use harsh, short shadows or solid 1px borders to define shapes.",
+      "Use 'spotlight' radial gradients behind key product images or cards to simulate real-world factory lighting."
+    ],
+    "borders": [
+      "Heavy use of border-collapse grid layouts.",
+      "Cards should have 1px solid borders. No rounded corners (rounded-none) or very sharp (rounded-sm) to maintain the brutalist industrial feel."
+    ]
+  },
+  "motion_and_interaction": {
+    "scrolling": "Mandatory use of @studio-freight/lenis for smooth, momentum-based scrolling. This elevates the perceived quality.",
+    "kinetic_hero": "The hero text must use framer-motion to reveal line-by-line using a 'mask' (overflow-hidden wrapper on each line, translating Y from 100% to 0).",
+    "editorial_marquee": "Use react-fast-marquee or framer-motion to create a slow-moving, infinite scrolling text band (e.g., 'LASER CUTTING • FOLDING • WELDING • FINISHING •'). Large outline text, tracking wide.",
+    "scroll_reveals": "Sections must fade in and slightly translate up (y: 40 -> 0, opacity: 0 -> 1) as they enter the viewport using framer-motion's 'whileInView'.",
+    "parallax": "Hero image or background texture should subtly translate Y on scroll. Use framer-motion useScroll and useTransform.",
+    "hover_states": "Buttons should have a magnetic feel or a hard 'fill' animation (e.g., background slides in from the left). Images should slightly scale up inside their clipped containers."
+  },
+  "component_patterns": {
+    "manifesto_chapters": {
+      "description": "The 4-step process. Each step is a full-width 'chapter'.",
+      "layout": "Massive background numbers (e.g., '01') in a low-opacity steel color. Content overlaps the number. Sticky positioning so they stack on scroll."
+    },
+    "service_card": {
+      "description": "Cards showcasing Laser Cutting, Folding, etc.",
+      "layout": "Tall, portrait-oriented cards. Clipped image at the top (grayscale until hovered). Bold title, minimal text. A sharp arrow icon in the corner. Hovering reveals full color and a spotlight effect."
+    },
+    "quote_form": {
+      "description": "Multi-step or long-scroll high-converting form.",
+      "layout": "Use Shadcn components heavily customized to look brutalist (sharp edges, dark backgrounds, high-contrast borders). Multi-select for processes. Large dropzone for drawings. Sticky summary panel on the right."
+    },
+    "industry_chip": {
+      "description": "Local SEO areas and industries.",
+      "layout": "Pill or sharp-edged rectangle with a 1px border. On hover, background fills with the accent color and text turns white. Arranged in a dense flex-wrap layout."
+    },
+    "sticky_nav": {
+      "description": "Navigation bar.",
+      "layout": "Glassmorphism with extreme blur (backdrop-blur-2xl) and a dark tint (bg-black/80). 1px bottom border. Contains logo, main links, and a solid orange 'Request a Quote' button."
+    }
+  },
+  "layouts_blueprint": {
+    "Home": [
+      "Hero: Kinetic typography reveal, massive H1, subtle parallax background.",
+      "Reassurance: 'Need a backup supplier?' block. High contrast, large bold text.",
+      "Marquee: Slow editorial scroll of capabilities.",
+      "Benefits Bento: 6 cards in a dense, asymmetric grid.",
+      "Services Showcase: Horizontal scroll or grid of tall service cards.",
+      "Manifesto Chapters: 4-step process with sticky stacking.",
+      "Trust & SEO: 'Built for Busy Buyers' blocks + local SEO chips.",
+      "Pre-footer Quote Form: Embedded form or massive CTA leading to the form."
+    ],
+    "Services": "Hub page listing all capabilities with deep dives, machinery specs, and video/image loops.",
+    "Service Specific Pages (Laser, Folding, Welding, Finishing)": "Hero with specific machinery imagery. Technical specs table. Material capabilities. Gallery. Quote CTA.",
+    "Industries": "Grid layout detailing how Bernat serves construction, automotive, aerospace, etc.",
+    "About": "The 'Why'. Factory floor photography. Values. The team behind the supplier network.",
+    "Quote": "Dedicated page. Left column: The form (Shadcn customized). Right column: Trust badges, testimonials, and contact info (sticky).",
+    "Contact": "Direct lines, email, map, and a simple message form.",
+    "Admin Dashboard": "Hidden behind /admin. Uses Shadcn heavily. Sidebar nav. Data table for quotes, leads, and analytics."
+  },
+  "image_urls": {
+    "hero_background": [
+      {
+        "url": "https://images.pexels.com/photos/177872/pexels-photo-177872.jpeg",
+        "description": "Dramatic welding sparks in a dark industrial setting. Perfect for hero background with overlay."
+      }
+    ],
+    "laser_cutting": [
+      {
+        "url": "https://images.pexels.com/photos/17180807/pexels-photo-17180807.jpeg",
+        "description": "Close-up of plasma/laser cutting machine."
+      },
+      {
+        "url": "https://images.pexels.com/photos/29988981/pexels-photo-29988981.jpeg",
+        "description": "Laser cutter in action."
+      }
+    ],
+    "welding": [
+      {
+        "url": "https://images.unsplash.com/photo-1563083165-32e6c6918e49",
+        "description": "Person welding, sparks flying."
+      },
+      {
+        "url": "https://images.pexels.com/photos/12475054/pexels-photo-12475054.jpeg",
+        "description": "Intense welding sparks from a metal frame."
+      }
+    ],
+    "factory_floor": [
+      {
+        "url": "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9",
+        "description": "Interior of a large industrial factory."
+      },
+      {
+        "url": "https://images.pexels.com/photos/12951623/pexels-photo-12951623.jpeg",
+        "description": "Heavy industrial machinery."
+      }
+    ],
+    "textures": [
+      {
+        "url": "https://images.unsplash.com/photo-1596865249308-2472dc5807d7",
+        "description": "Dark scratchy metal texture."
+      },
+      {
+        "url": "https://images.pexels.com/photos/36095234/pexels-photo-36095234.jpeg",
+        "description": "Dark diamond plate texture."
+      }
+    ]
+  },
+  "3d_libraries_and_packages": [
+    "framer-motion",
+    "@studio-freight/lenis",
+    "react-fast-marquee",
+    "lucide-react",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "instructions_to_main_agent": [
+    "CRITICAL: Set the overall background to the dark theme (#0A0A0A) immediately in index.css.",
+    "CRITICAL: Load 'Oswald' and 'Manrope' fonts from Google Fonts in index.html or layout wrapper.",
+    "Do not use generic border-radius. Everything should be sharp (rounded-none) or very slightly rounded (rounded-sm) to fit the brutalist industrial theme.",
+    "Build the Kinetic Hero first. Ensure the 'masked line-by-line' reveal works perfectly using framer-motion.",
+    "For the Quote Form, use Shadcn form components but strip away the default soft borders and shadows. Make them look harsh, using 1px borders (#404040) and sharp corners.",
+    "Ensure all images have an overlay or a 'spotlight' treatment to blend into the dark theme.",
+    "Implement Lenis smooth scrolling globally.",
+    "Include 'data-testid' on all interactive elements (buttons, inputs, links)."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts. Use asymmetrical, bento-style grids.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "You MUST NOT apply universal transition (e.g., transition: all). Add specific transitions.",
+    "You MUST NOT center align the app container (.App { text-align: center; }).",
+    "Use modern, sharp button styles with interaction animations and the brand orange accent.",
+    "NEVER use AI assistant Emoji characters.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Use 'sonner' for toasts."
+  ]
+}
