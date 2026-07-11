@@ -440,7 +440,7 @@ def _quote_summary(doc: dict) -> dict:
 
 @api.get("/admin/quotes")
 async def list_quotes(user=Depends(require_admin)) -> dict:
-    cursor = db.quotes.find({}, {"_id": 0, "files.data_b64": 0}).sort("created_at", -1)
+    cursor = db.quotes.find({}, {"_id": 0, "files.data_b64": 0}).sort("created_at", -1).limit(500)
     items: list[dict] = []
     async for doc in cursor:
         items.append(_quote_summary(doc))
@@ -510,7 +510,7 @@ async def download_file(
 
 @api.get("/admin/messages")
 async def list_messages(user=Depends(require_admin)) -> dict:
-    cursor = db.contact_messages.find({}, {"_id": 0}).sort("created_at", -1)
+    cursor = db.contact_messages.find({}, {"_id": 0}).sort("created_at", -1).limit(500)
     items = []
     async for doc in cursor:
         items.append(doc)
