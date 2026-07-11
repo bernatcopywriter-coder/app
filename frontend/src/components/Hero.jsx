@@ -66,7 +66,7 @@ export default function Hero() {
                             <span className="text-brand italic font-normal">Without</span>{' '}
                         </span>,
                         <span key="l3">
-                            the <span className="text-outline">Usual Hassle</span>.
+                            the <span className="text-outline-strong">Usual Hassle</span>.
                         </span>,
                     ]}
                     className="h-display text-[clamp(2.4rem,9vw,7.5rem)] font-semibold text-ink max-w-[16ch]"

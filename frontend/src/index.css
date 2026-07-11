@@ -159,6 +159,11 @@ html.lenis body {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
     color: transparent;
 }
+.text-outline-strong {
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.95);
+    color: transparent;
+    text-shadow: 0 0 24px rgba(255, 255, 255, 0.12);
+}
 .text-outline-brand {
     -webkit-text-stroke: 1.5px var(--brand);
     color: transparent;
