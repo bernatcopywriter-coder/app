@@ -60,7 +60,7 @@ export default function Hero() {
                 <RevealLines
                     as="h1"
                     lines={[
-                        'Steel, Laser Cutting ',
+                        <span key="l1">Steel, Laser Cutting&nbsp;</span>,
                         <span key="l2">
                             &amp; Fabrication{' '}
                             <span className="text-brand italic font-normal">Without</span>{' '}
@@ -69,7 +69,7 @@ export default function Hero() {
                             the <span className="text-outline-strong">Usual Hassle</span>.
                         </span>,
                     ]}
-                    className="h-display text-[clamp(2.4rem,9vw,7.5rem)] font-semibold text-ink max-w-[16ch]"
+                    className="h-display text-[clamp(2rem,9vw,7.5rem)] font-semibold text-ink max-w-[16ch]"
                     lineClassName=""
                     ariaLabel="Steel, Laser Cutting & Fabrication Without the Usual Hassle."
                 />
@@ -91,12 +91,12 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.05, duration: 0.7 }}
-                        className="lg:col-span-6 lg:justify-self-end flex flex-wrap gap-4"
+                        className="lg:col-span-6 lg:justify-self-end flex flex-col sm:flex-row flex-wrap gap-4"
                     >
                         <Link
                             to="/quote"
                             data-testid="hero-cta-quote"
-                            className="btn-fill inline-flex items-center gap-3 px-7 py-4 bg-brand text-white text-sm font-semibold uppercase tracking-widest hover:text-white"
+                            className="btn-fill inline-flex items-center justify-center gap-3 px-7 py-4 bg-brand text-white text-sm font-semibold uppercase tracking-widest hover:text-white"
                         >
                             Request a Quote
                             <ArrowUpRight size={18} strokeWidth={2.4} />
@@ -104,7 +104,7 @@ export default function Hero() {
                         <Link
                             to="/quote"
                             data-testid="hero-cta-drawings"
-                            className="inline-flex items-center gap-3 px-7 py-4 border border-line-strong text-ink text-sm font-semibold uppercase tracking-widest hover:border-brand hover:text-brand transition-colors"
+                            className="inline-flex items-center justify-center gap-3 px-7 py-4 border border-line-strong text-ink text-sm font-semibold uppercase tracking-widest hover:border-brand hover:text-brand transition-colors"
                         >
                             <Upload size={16} />
                             Send Your Drawings
@@ -116,7 +116,7 @@ export default function Hero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.3, duration: 0.8 }}
-                    className="mt-16 flex items-center justify-between border-t border-line pt-6 text-xs uppercase tracking-widest text-ink-3"
+                    className="mt-16 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:justify-between border-t border-line pt-6 text-[11px] sm:text-xs uppercase tracking-widest text-ink-3"
                 >
                     <div className="flex items-center gap-3">
                         <span className="w-2 h-2 rounded-none bg-brand animate-blink" />

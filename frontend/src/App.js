@@ -6,6 +6,7 @@ import '@/App.css';
 import useLenis from '@/hooks/useLenis';
 import { AuthProvider } from '@/providers/AuthProvider';
 import SiteLayout from '@/layouts/SiteLayout';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 import Home from '@/pages/Home';
 import Services from '@/pages/Services';
@@ -135,23 +136,25 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                <AuthProvider>
-                    <ScrollToTop />
-                    <AppRouter />
-                    <Toaster
-                        theme="dark"
-                        position="top-right"
-                        toastOptions={{
-                            style: {
-                                background: '#111111',
-                                color: '#f4f4f5',
-                                border: '1px solid #262626',
-                                borderRadius: '2px',
-                                fontFamily: 'Manrope, sans-serif',
-                            },
-                        }}
-                    />
-                </AuthProvider>
+                <ErrorBoundary>
+                    <AuthProvider>
+                        <ScrollToTop />
+                        <AppRouter />
+                        <Toaster
+                            theme="dark"
+                            position="top-right"
+                            toastOptions={{
+                                style: {
+                                    background: '#111111',
+                                    color: '#f4f4f5',
+                                    border: '1px solid #262626',
+                                    borderRadius: '2px',
+                                    fontFamily: 'Manrope, sans-serif',
+                                },
+                            }}
+                        />
+                    </AuthProvider>
+                </ErrorBoundary>
             </BrowserRouter>
         </div>
     );

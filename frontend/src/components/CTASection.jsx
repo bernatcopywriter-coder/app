@@ -6,7 +6,7 @@ export default function CTASection() {
     return (
         <section
             data-testid="cta-section"
-            className="relative py-32 sm:py-40 overflow-hidden bg-bg-0 border-b border-line"
+            className="relative py-24 sm:py-32 lg:py-40 overflow-hidden bg-bg-0 border-b border-line"
         >
             <div
                 className="absolute inset-0 opacity-25 bg-cover bg-center"
