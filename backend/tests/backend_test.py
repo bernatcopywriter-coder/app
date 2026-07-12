@@ -27,13 +27,51 @@ def _fake_pdf_bytes() -> bytes:
 
 
 # --------- health --------------------------------------------------------
+# The Kubernetes readiness probe hits the container internally at
+# 127.0.0.1:8001/health (no /api prefix, HTTP/1.0). The external ingress only
+# routes /api/* to the backend, so /health on the external URL goes to the
+# frontend. We therefore test the root-level /health against the INTERNAL
+# 127.0.0.1:8001 (the same target the probe uses) while /api/health is tested
+# via the external URL through the ingress.
+INTERNAL = "http://127.0.0.1:8001"
+
+
 class TestHealth:
-    def test_health_ok(self, session):
+    def test_api_health_ok(self, session):
+        """Regression: existing /api/health still returns 200 + expected shape."""
         r = session.get(f"{API}/health", timeout=10)
         assert r.status_code == 200
         data = r.json()
         assert data.get("status") == "ok"
         assert "time" in data and isinstance(data["time"], str)
+
+    def test_root_health_ok(self, session):
+        """PRIMARY BUG FIX: root-level /health (no /api prefix) must return 200."""
+        r = session.get(f"{INTERNAL}/health", timeout=10)
+        assert r.status_code == 200
+        data = r.json()
+        assert data.get("status") == "ok"
+        assert "time" in data and isinstance(data["time"], str)
+
+    def test_root_health_http10_probe(self, session):
+        """The k8s probe uses HTTP/1.0; must still return 200."""
+        import subprocess
+        result = subprocess.run(
+            ["curl", "--http1.0", "-s", "-o", "/dev/null", "-w", "%{http_code}",
+             f"{INTERNAL}/health"],
+            capture_output=True, text=True, timeout=10,
+        )
+        assert result.stdout.strip() == "200", (
+            f"HTTP/1.0 probe to /health returned {result.stdout!r} — the k8s "
+            f"readiness probe will fail. stderr={result.stderr!r}"
+        )
+
+    def test_api_root_still_works(self, session):
+        """Regression: /api/ still returns the small service JSON, not shadowed."""
+        r = session.get(f"{API}/", timeout=10)
+        assert r.status_code == 200
+        data = r.json()
+        assert data == {"service": "bernat-solutions", "status": "ok"}
 
 
 # --------- quote submission ---------------------------------------------

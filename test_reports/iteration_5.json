@@ -1,0 +1,34 @@
+{
+  "summary": "Verified the k8s readiness-probe bug fix: added root-level GET /health handler on the FastAPI app (server.py line ~297) alongside the existing /api/health on the /api router. Extended backend_test.py TestHealth with 3 new tests (root /health via internal 127.0.0.1:8001, root /health via curl --http1.0 mimicking the kubelet probe, and /api/ regression). All 18/18 pytest tests pass in 1.53s. Manual live checks: (a) internal http://127.0.0.1:8001/health HTTP/1.1 → 200 {\"status\":\"ok\",\"time\":\"<iso>\"}; (b) internal http://127.0.0.1:8001/health HTTP/1.0 (exact k8s probe format) → 200; (c) internal /api/health → 200 same shape; (d) internal /api/ → 200 {\"service\":\"bernat-solutions\",\"status\":\"ok\"} — proves the new @app.get('/health') did NOT shadow the /api router's own routes. Confirmed via ingress: /api/health, /api/, /api/admin/quotes and /api/admin/messages all still return correct shapes (admin/quotes → {items,stats{total,new,in_progress,quoted,closed}}, admin/messages → {items,total:8}). NOTE on external testing: the k8s ingress only routes /api/* to the backend on 8001 — the external URL /health hits the React frontend (200 HTML), which is expected and irrelevant to the probe. The probe hits the container internally on 127.0.0.1:8001/health, which is exactly what we verified. Frontend smoke on desktop 1440x900: / loads cleanly (H1 'Steel, Laser Cutting & Fabrication Without the Usual Hassle.'), zero console errors, quote form end-to-end submit produced ref q_e51a84abd57a → quote-success shown → cleaned up via DELETE.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py:297 — @app.get('/health') is correctly registered on the FastAPI app root (not the /api router), so both the k8s probe path (no prefix) and the existing /api/health path resolve without conflict. Handler returns the same {status,time} shape as /api/health.",
+    "Route ordering is safe: /api/health is registered on api_router (line ~291) BEFORE app.include_router(api_router), and the root /health is on `app` — no shadowing. Verified /api/ still returns the small service JSON.",
+    "Consider (future, optional): expose both /health and /healthz (some ingress configs use /healthz). Not required for the current probe fix."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py (extended TestHealth with test_api_health_ok, test_root_health_ok, test_root_health_http10_probe, test_api_root_still_works)",
+    "/app/test_reports/pytest/pytest_results.xml (regenerated — 18 passed)",
+    "/app/test_reports/iteration_5.json (new)"
+  ],
+  "success_rate": {"backend": "100% (18/18)", "frontend": "100% (/, /quote submit smoke, 0 console errors)"},
+  "test_credentials": "Admin: Authorization: Bearer test_session_admin_bernat (alex@bernatsolutions.com). Non-admin: test_session_nonadmin. Re-seeded via mongosh before this run.",
+  "seed_data_creation": "Re-seeded admin + non-admin session tokens. Playwright e2e quote q_e51a84abd57a submitted and cleaned up via DELETE /api/admin/quotes/{id}. Lifecycle pytest self-cleans its own TEST_ quote.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "The k8s readiness probe fix works. Because the preview ingress only routes /api/* to backend port 8001, testing /health via the external REACT_APP_BACKEND_URL will hit the React frontend and get 200 HTML — that is NOT a bug and NOT what the probe hits. The kubelet dials the pod IP:8001/health directly, so the correct target for regression is http://127.0.0.1:8001/health (both HTTP/1.1 and HTTP/1.0). Both are now covered in TestHealth. Nothing else changed since iteration_4.",
+  "rca_of_the_issue": "RCA: kubelet readiness/liveness probe was configured with path=/health (no /api prefix, HTTP/1.0). Backend only had @api.get('/health') under the /api router → probe hit /health on the app root → FastAPI returned 404 → container never became Ready → deploy stalled with repeating 'GET /health HTTP/1.0 404 Not Found'. Fix: added @app.get('/health') on the FastAPI app root returning the same {status:'ok', time:<iso>} shape. Verified internally on 127.0.0.1:8001 that both HTTP/1.0 and HTTP/1.1 requests get 200, and that the new route does not shadow /api/health or /api/. Expected deploy log now: repeating 200s."
+}
