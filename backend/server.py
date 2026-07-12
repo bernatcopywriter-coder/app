@@ -293,6 +293,12 @@ async def health() -> dict:
     return {"status": "ok", "time": datetime.now(timezone.utc).isoformat()}
 
 
+# Root-level health for Kubernetes readiness/liveness probes (no /api prefix)
+@app.get("/health")
+async def root_health() -> dict:
+    return {"status": "ok", "time": datetime.now(timezone.utc).isoformat()}
+
+
 def _client_ip(request: Request) -> str:
     fwd = request.headers.get("x-forwarded-for")
     if fwd:
