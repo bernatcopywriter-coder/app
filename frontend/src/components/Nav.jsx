@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
-import { NAV_LINKS } from '@/lib/constants';
+import { Menu, X, ArrowUpRight, Mail } from 'lucide-react';
+import { NAV_LINKS, CONTACT } from '@/lib/constants';
 
 export default function Nav() {
     const [scrolled, setScrolled] = useState(false);
@@ -22,12 +22,31 @@ export default function Nav() {
 
     return (
         <>
+            {/* Top announcement banner — drives direct email enquiries */}
+            <a
+                href={`mailto:${CONTACT.email}?subject=Enquiry%20via%20Bernat%20Solutions`}
+                data-testid="top-email-banner"
+                className="group fixed inset-x-0 top-0 z-[60] h-9 flex items-center justify-center gap-3 bg-brand text-white text-[11px] sm:text-xs uppercase tracking-widest font-semibold border-b border-black/20 hover:bg-brand-hover transition-colors px-4"
+            >
+                <Mail size={14} strokeWidth={2.4} className="shrink-0" />
+                <span className="hidden sm:inline">Fast, no-obligation quotes —</span>
+                <span className="truncate">
+                    Email <span className="underline underline-offset-2">{CONTACT.email}</span>
+                </span>
+                <span className="hidden md:inline opacity-80">· Reply within 24 hrs</span>
+                <ArrowUpRight
+                    size={14}
+                    strokeWidth={2.4}
+                    className="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+            </a>
+
             <motion.header
                 initial={{ y: -40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.7, 0, 0.2, 1], delay: 0.05 }}
                 data-testid="site-nav"
-                className={`fixed inset-x-0 top-0 z-50 transition-[background,backdrop-filter,border-color] duration-300 ${
+                className={`fixed inset-x-0 top-9 z-50 transition-[background,backdrop-filter,border-color] duration-300 ${
                     scrolled
                         ? 'bg-bg-0/80 backdrop-blur-2xl border-b border-line'
                         : 'bg-transparent border-b border-transparent'
@@ -106,7 +125,7 @@ export default function Nav() {
                         exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.25 }}
                         data-testid="mobile-nav"
-                        className="fixed inset-x-0 top-[68px] z-40 md:hidden border-b border-line bg-bg-0/95 backdrop-blur-xl"
+                        className="fixed inset-x-0 top-[104px] z-40 md:hidden border-b border-line bg-bg-0/95 backdrop-blur-xl"
                     >
                         <div className="container-x py-8 flex flex-col gap-1">
                             {NAV_LINKS.map((l) => (

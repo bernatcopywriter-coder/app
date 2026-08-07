@@ -12,7 +12,7 @@ export default function PageHero({
     return (
         <section
             data-testid="page-hero"
-            className="relative pt-[120px] pb-16 md:pt-[160px] md:pb-24 border-b border-line overflow-hidden"
+            className="relative pt-[156px] pb-16 md:pt-[196px] md:pb-24 border-b border-line overflow-hidden"
         >
             {image && (
                 <div className="absolute inset-0" aria-hidden>

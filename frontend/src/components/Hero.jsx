@@ -18,7 +18,7 @@ export default function Hero() {
         <section
             ref={ref}
             data-testid="hero-section"
-            className="relative overflow-hidden pt-[68px] min-h-[100svh] flex flex-col"
+            className="relative overflow-hidden pt-[104px] min-h-[100svh] flex flex-col"
         >
             {/* Parallax background */}
             <motion.div
