@@ -9,11 +9,13 @@ import asyncio
 import base64
 import logging
 import os
+import secrets
 import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import List, Optional
 
+import bcrypt
 import httpx
 from dotenv import load_dotenv
 from fastapi import (
@@ -60,6 +62,13 @@ ALLOWED_FILE_EXT = {
 EMERGENT_SESSION_URL = (
     "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
 )
+
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+
+# In-memory brute-force tracker: {ip: [(ts, ...)]}
+_LOGIN_ATTEMPTS: dict[str, list[float]] = {}
+_LOGIN_MAX = 5
+_LOGIN_WINDOW = 900  # 15 min
 
 # --- Emergent-managed Resend email (transactional notifications) -----------
 EMAIL_BASE_URL = "https://integrations.emergentagent.com"  # constant, survives deploy
@@ -135,6 +144,11 @@ class UserOut(BaseModel):
 
 class SessionExchange(BaseModel):
     session_id: str
+
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
 
 
 # ---------------------------------------------------------------------------
@@ -285,6 +299,90 @@ async def logout(
         await db.user_sessions.delete_one({"session_token": token})
     response.delete_cookie("session_token", path="/", samesite="none", secure=True)
     return {"ok": True}
+
+
+# --- Password-based admin login -------------------------------------------
+def _hash_password(pw: str) -> str:
+    return bcrypt.hashpw(pw.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def _verify_password(pw: str, hashed: str) -> bool:
+    try:
+        return bcrypt.checkpw(pw.encode("utf-8"), hashed.encode("utf-8"))
+    except Exception:
+        return False
+
+
+def _brute_force_check(ip: str) -> bool:
+    now = datetime.now(timezone.utc).timestamp()
+    attempts = [t for t in _LOGIN_ATTEMPTS.get(ip, []) if now - t < _LOGIN_WINDOW]
+    _LOGIN_ATTEMPTS[ip] = attempts
+    return len(attempts) < _LOGIN_MAX
+
+
+def _record_failed_login(ip: str) -> None:
+    _LOGIN_ATTEMPTS.setdefault(ip, []).append(
+        datetime.now(timezone.utc).timestamp()
+    )
+
+
+@api.post("/auth/login")
+async def login(payload: LoginRequest, request: Request, response: Response) -> dict:
+    ip = _client_ip(request) or "unknown"
+    if not _brute_force_check(ip):
+        raise HTTPException(
+            status_code=429,
+            detail="Too many failed attempts. Try again in 15 minutes.",
+        )
+
+    email = payload.email.lower().strip()
+    user_doc = await db.users.find_one({"email": email}, {"_id": 0})
+    if not user_doc or not user_doc.get("password_hash"):
+        _record_failed_login(ip)
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    if not _verify_password(payload.password, user_doc["password_hash"]):
+        _record_failed_login(ip)
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    # Success — reset attempts, issue session
+    _LOGIN_ATTEMPTS.pop(ip, None)
+    session_token = secrets.token_urlsafe(48)
+    expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+    await db.user_sessions.update_one(
+        {"session_token": session_token},
+        {
+            "$set": {
+                "session_token": session_token,
+                "user_id": user_doc["user_id"],
+                "expires_at": expires_at.isoformat(),
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            }
+        },
+        upsert=True,
+    )
+    await db.users.update_one(
+        {"user_id": user_doc["user_id"]},
+        {"$set": {"last_login": datetime.now(timezone.utc).isoformat()}},
+    )
+    response.set_cookie(
+        key="session_token",
+        value=session_token,
+        max_age=7 * 24 * 60 * 60,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        path="/",
+    )
+    is_admin = email in ADMIN_EMAILS
+    return {
+        "user_id": user_doc["user_id"],
+        "email": email,
+        "name": user_doc.get("name", ""),
+        "picture": user_doc.get("picture"),
+        "is_admin": is_admin,
+        "session_token": session_token,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -743,3 +841,32 @@ app.add_middleware(
 @app.on_event("shutdown")
 async def _shutdown() -> None:
     client.close()
+
+
+@app.on_event("startup")
+async def _seed_admin() -> None:
+    """Ensure an admin user exists with the password from ADMIN_PASSWORD."""
+    if not ADMIN_PASSWORD:
+        logger.warning("ADMIN_PASSWORD not set — skipping admin seed")
+        return
+    email = next(iter(ADMIN_EMAILS))
+    existing = await db.users.find_one({"email": email}, {"_id": 0})
+    hashed = _hash_password(ADMIN_PASSWORD)
+    if existing is None:
+        await db.users.insert_one({
+            "user_id": f"user_{uuid.uuid4().hex[:12]}",
+            "email": email,
+            "name": "Bernat Admin",
+            "picture": None,
+            "password_hash": hashed,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
+        logger.info("Seeded admin user %s", email)
+    elif not existing.get("password_hash") or not _verify_password(
+        ADMIN_PASSWORD, existing["password_hash"]
+    ):
+        await db.users.update_one(
+            {"email": email},
+            {"$set": {"password_hash": hashed, "name": existing.get("name") or "Bernat Admin"}},
+        )
+        logger.info("Updated admin password for %s", email)

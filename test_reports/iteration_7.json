@@ -1,0 +1,29 @@
+{
+  "summary": "Verified the new password-based admin login. Full regression suite (24/24) green: 18 baseline tests from iteration_5/6 + 6 new tests in /app/backend/tests/test_password_login.py covering happy path, /me + /admin/quotes with returned session_token, logout invalidation, unknown email (401 same message), wrong password (401 same message), and brute-force lockout (5 fails → 6th returns 429; correct pw also 429 while locked). Startup seed confirmed: backend.err.log shows 'bernat - INFO - Updated admin password for alex@bernatsolutions.com'; db.users doc for alex@bernatsolutions.com has password_hash starting with '$2b$' (bcrypt marker). Email pipeline still fires — live /api/quotes submission wrote 'bernat - INFO - Email sent to alex@bernatsolutions.com (subject=New quote enquiry — TEST_EmailPipe (q_25f54368cf00))' to backend.err.log ~5s after 201. Frontend e2e: /login shows login-page/login-email/login-password/login-submit testids, NO 'Continue with Google' button (count=0). Wrong password → sonner toast text 'Invalid email or password' (plain string, no React crash from array). Correct login → redirected to /admin, admin-page + admin-user-email='alex@bernatsolutions.com' render. Page reload keeps user on /admin (AuthProvider /me + cookie works). admin-logout click returns to /login.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_new_processes.py",
+    "/app/backend/tests/test_password_login.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py:329 POST /api/auth/login: correct bcrypt.checkpw usage; returns identical 'Invalid email or password' message for unknown-email and wrong-password (prevents user enumeration). ✓",
+    "server.py:316 _brute_force_check window (900s / 5 attempts) is process-local in _LOGIN_ATTEMPTS dict — resets on backend restart and does NOT sync across workers/replicas. Acceptable for single-worker preview; if scaling out, move to Redis or Mongo with TTL index.",
+    "server.py:846 @app.on_event('startup') seed uses next(iter(ADMIN_EMAILS)) — nondeterministic if multiple admin emails ever configured; consider sorting or reading a dedicated ADMIN_EMAIL env var. Minor.",
+    "server.py:340 login treats a user without password_hash the same as no user (401) — good for the legacy Google-only users seeded via /auth/session; they simply cannot use password login and stay Google-only.",
+    "server.py:368 set_cookie uses samesite='none' + secure=True + httponly=True — required for cross-origin credentialed calls from the preview frontend; ✓ matches CORS allow_credentials=True. Note: CORS_ORIGINS='*' with allow_credentials=True is normally a spec violation, but Starlette's CORSMiddleware handles this by echoing the request Origin when '*' + credentials is configured. Consider tightening to explicit origins for production hardening.",
+    "Login.jsx:8 formatError helper correctly handles FastAPI's list-of-errors detail (Pydantic 422) — prevents 'Objects are not valid as a React child' crash. ✓",
+    "api.js:30 loginWithPassword uses shared axios instance with withCredentials=true — cookie will be stored by the browser and sent on subsequent /api/auth/me calls. ✓"
+  ],
+  "updated_files": ["/app/backend/tests/test_password_login.py"],
+  "success_rate": {"backend": "100% (24/24 pytest incl. 6 new login tests)", "frontend": "100% (login page, wrong-pw toast, correct login → /admin, reload persistence, logout)"},
+  "test_credentials": "Admin (password login): alex@bernatsolutions.com / BernatAdmin2025! (seeded via ADMIN_PASSWORD env var on startup). Backward-compat bearer: 'test_session_admin_bernat' (mongosh-seeded, still works). Non-admin bearer: 'test_session_nonadmin'.",
+  "seed_data_creation": "Re-seeded test_session_admin_bernat + test_session_nonadmin session tokens via mongosh (needed because backend restart wipes them if not present). Live TEST_ quotes cleaned via mongosh db.quotes.deleteMany({company:/^TEST_/}).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Password login is live at POST /api/auth/login. Legacy POST /api/auth/session (Emergent OAuth) still wired but not needed. Brute-force lockout state is IN-MEMORY (module-level dict) → will reset if backend restarts, so if your test hits 429, restart backend to clear or use a fresh X-Forwarded-For IP. When adding the non-admin UI flow test, seed a user with password_hash via mongosh: `db.users.insertOne({user_id:'u_nonadmin_pw', email:'nonadmin.pw@example.com', name:'Non Admin', password_hash: '<bcrypt hash of a known password>', created_at:new Date()})`, then log in — frontend should redirect to '/' with toast 'This account is not authorised for the admin dashboard.' /app/backend/.env must not be edited (contains ADMIN_PASSWORD + EMERGENT_EMAIL_KEY).",
+  "rca_of_the_issue": "N/A — feature verification. Prior bug (Google OAuth couldn't be used because alex@bernatsolutions.com is a non-Google company mailbox) is resolved by the new password-based flow. Verified end-to-end."
+}

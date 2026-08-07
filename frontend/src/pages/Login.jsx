@@ -1,11 +1,47 @@
-import { Link } from 'react-router-dom';
-import { LogIn, ArrowUpRight } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { LogIn, ArrowUpRight, Loader2 } from 'lucide-react';
+import { loginWithPassword } from '@/lib/api';
+import { useAuth } from '@/providers/AuthProvider';
+
+function formatError(detail) {
+    if (!detail) return 'Login failed. Please try again.';
+    if (typeof detail === 'string') return detail;
+    if (Array.isArray(detail)) {
+        return detail.map((e) => (e?.msg ? e.msg : JSON.stringify(e))).join(' ');
+    }
+    return String(detail);
+}
 
 export default function Login() {
-    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
-    const handleGoogleLogin = () => {
-        const redirectUrl = window.location.origin + '/admin';
-        window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
+    const navigate = useNavigate();
+    const { setUser } = useAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [busy, setBusy] = useState(false);
+
+    const submit = async (e) => {
+        e.preventDefault();
+        if (!email || !password) {
+            toast.error('Enter your email and password.');
+            return;
+        }
+        setBusy(true);
+        try {
+            const user = await loginWithPassword(email, password);
+            setUser(user);
+            if (!user.is_admin) {
+                toast.error('This account is not authorised for the admin dashboard.');
+                navigate('/', { replace: true });
+                return;
+            }
+            navigate('/admin', { replace: true, state: { user } });
+        } catch (err) {
+            toast.error(formatError(err?.response?.data?.detail) || err.message);
+        } finally {
+            setBusy(false);
+        }
     };
 
     return (
@@ -37,28 +73,72 @@ export default function Login() {
                 <div className="absolute inset-0 grid-lines opacity-60" aria-hidden />
 
                 <div className="relative container-x max-w-md w-full">
-                    <div className="border border-line-strong bg-bg-1 p-10">
+                    <form
+                        onSubmit={submit}
+                        className="border border-line-strong bg-bg-1 p-8 sm:p-10"
+                    >
                         <div className="overline brand mb-4">Admin</div>
                         <h1 className="h-display text-4xl text-ink mb-4">Sign in</h1>
-                        <p className="text-ink-2 text-sm leading-relaxed">
-                            Restricted to Bernat Solutions team accounts. Sign in with your
-                            Google account to view submitted quotes and messages.
+                        <p className="text-ink-2 text-sm leading-relaxed mb-8">
+                            Restricted to Bernat Solutions team accounts. Enter your admin
+                            email and password to view submitted quotes and messages.
                         </p>
 
+                        <label className="block mb-5">
+                            <span className="overline block mb-2">Email</span>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                autoComplete="email"
+                                required
+                                data-testid="login-email"
+                                className="w-full bg-transparent border-0 border-b border-line-strong text-ink text-lg py-2 outline-none focus:border-brand transition-colors"
+                            />
+                        </label>
+
+                        <label className="block mb-8">
+                            <span className="overline block mb-2">Password</span>
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                autoComplete="current-password"
+                                required
+                                data-testid="login-password"
+                                className="w-full bg-transparent border-0 border-b border-line-strong text-ink text-lg py-2 outline-none focus:border-brand transition-colors"
+                            />
+                        </label>
+
                         <button
-                            type="button"
-                            onClick={handleGoogleLogin}
-                            data-testid="login-google-btn"
-                            className="btn-fill mt-8 w-full inline-flex items-center justify-center gap-3 px-6 py-4 border border-line-strong text-ink text-sm font-semibold uppercase tracking-widest hover:text-white"
+                            type="submit"
+                            disabled={busy}
+                            data-testid="login-submit"
+                            className="btn-fill w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-brand text-white text-sm font-semibold uppercase tracking-widest disabled:opacity-60"
                         >
-                            <LogIn size={16} />
-                            Continue with Google
+                            {busy ? (
+                                <>
+                                    <Loader2 size={16} className="animate-spin" /> Signing in…
+                                </>
+                            ) : (
+                                <>
+                                    <LogIn size={16} />
+                                    Sign in
+                                </>
+                            )}
                         </button>
 
-                        <div className="mt-6 text-xs text-ink-3">
-                            You&apos;ll be redirected to Google, then straight back here.
+                        <div className="mt-6 text-xs text-ink-3 leading-relaxed">
+                            Forgot your password? Email{' '}
+                            <a
+                                href="mailto:alex@bernatsolutions.com"
+                                className="text-brand hover:underline"
+                            >
+                                alex@bernatsolutions.com
+                            </a>{' '}
+                            to reset.
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
