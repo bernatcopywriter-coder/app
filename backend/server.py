@@ -151,6 +151,11 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class ChangePasswordRequest(BaseModel):
+    current_password: str
+    new_password: str
+
+
 # ---------------------------------------------------------------------------
 # Auth helpers
 # ---------------------------------------------------------------------------
@@ -383,6 +388,49 @@ async def login(payload: LoginRequest, request: Request, response: Response) -> 
         "is_admin": is_admin,
         "session_token": session_token,
     }
+
+
+@api.post("/auth/change-password")
+async def change_password(
+    payload: ChangePasswordRequest, user=Depends(require_user)
+) -> dict:
+    if len(payload.new_password) < 8:
+        raise HTTPException(
+            status_code=400, detail="New password must be at least 8 characters."
+        )
+    if payload.new_password == payload.current_password:
+        raise HTTPException(
+            status_code=400,
+            detail="New password must be different from the current password.",
+        )
+
+    current_hash = user.get("password_hash")
+    if not current_hash or not _verify_password(payload.current_password, current_hash):
+        raise HTTPException(status_code=401, detail="Current password is incorrect.")
+
+    new_hash = _hash_password(payload.new_password)
+    await db.users.update_one(
+        {"user_id": user["user_id"]},
+        {
+            "$set": {
+                "password_hash": new_hash,
+                "password_updated_at": datetime.now(timezone.utc).isoformat(),
+            }
+        },
+    )
+    # Invalidate all other sessions for security; keep the current one alive.
+    current_token = None
+    # Best-effort: look up the current active session by matching user_id + most recent.
+    sess = await db.user_sessions.find_one(
+        {"user_id": user["user_id"]}, sort=[("created_at", -1)]
+    )
+    if sess:
+        current_token = sess.get("session_token")
+    if current_token:
+        await db.user_sessions.delete_many(
+            {"user_id": user["user_id"], "session_token": {"$ne": current_token}}
+        )
+    return {"ok": True}
 
 
 # ---------------------------------------------------------------------------
@@ -845,14 +893,16 @@ async def _shutdown() -> None:
 
 @app.on_event("startup")
 async def _seed_admin() -> None:
-    """Ensure an admin user exists with the password from ADMIN_PASSWORD."""
+    """Ensure an admin user exists. Only seeds password on first create.
+    After creation, the admin can rotate their password via /api/auth/change-password;
+    subsequent restarts will NOT overwrite their custom password."""
     if not ADMIN_PASSWORD:
         logger.warning("ADMIN_PASSWORD not set — skipping admin seed")
         return
     email = next(iter(ADMIN_EMAILS))
     existing = await db.users.find_one({"email": email}, {"_id": 0})
-    hashed = _hash_password(ADMIN_PASSWORD)
     if existing is None:
+        hashed = _hash_password(ADMIN_PASSWORD)
         await db.users.insert_one({
             "user_id": f"user_{uuid.uuid4().hex[:12]}",
             "email": email,
@@ -862,11 +912,11 @@ async def _seed_admin() -> None:
             "created_at": datetime.now(timezone.utc).isoformat(),
         })
         logger.info("Seeded admin user %s", email)
-    elif not existing.get("password_hash") or not _verify_password(
-        ADMIN_PASSWORD, existing["password_hash"]
-    ):
+    elif not existing.get("password_hash"):
+        # Only set a password if the user has none (migration case).
+        hashed = _hash_password(ADMIN_PASSWORD)
         await db.users.update_one(
             {"email": email},
             {"$set": {"password_hash": hashed, "name": existing.get("name") or "Bernat Admin"}},
         )
-        logger.info("Updated admin password for %s", email)
+        logger.info("Set initial password for existing admin %s", email)

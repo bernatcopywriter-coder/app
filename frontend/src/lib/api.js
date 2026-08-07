@@ -32,6 +32,14 @@ export const loginWithPassword = async (email, password) => {
     return data;
 };
 
+export const changePassword = async (currentPassword, newPassword) => {
+    const { data } = await api.post('/auth/change-password', {
+        current_password: currentPassword,
+        new_password: newPassword,
+    });
+    return data;
+};
+
 export const getMe = async () => {
     const { data } = await api.get('/auth/me');
     return data;

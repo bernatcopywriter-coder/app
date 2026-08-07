@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import {
     Loader2, LogOut, FileText, Download, Trash2, ArrowLeft, X,
-    Mail as MailIcon, Phone as PhoneIcon, MapPin,
+    Mail as MailIcon, Phone as PhoneIcon, MapPin, KeyRound, Eye, EyeOff,
 } from 'lucide-react';
 import {
     listAdminQuotes,
@@ -13,6 +13,7 @@ import {
     deleteAdminQuote,
     adminFileUrl,
     listAdminMessages,
+    changePassword,
 } from '@/lib/api';
 import { useAuth } from '@/providers/AuthProvider';
 
@@ -34,6 +35,7 @@ export default function Admin() {
     const [loadingData, setLoadingData] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
     const [selected, setSelected] = useState(null);
+    const [pwOpen, setPwOpen] = useState(false);
 
     // Auth guard
     useEffect(() => {
@@ -153,6 +155,14 @@ export default function Admin() {
                             <span data-testid="admin-user-email">{effUser?.email}</span>
                         </div>
                         <button
+                            data-testid="admin-change-password"
+                            onClick={() => setPwOpen(true)}
+                            className="btn-fill inline-flex items-center gap-2 px-4 py-2 border border-line-strong text-ink text-xs font-semibold uppercase tracking-widest hover:text-white"
+                        >
+                            <KeyRound size={14} />
+                            <span className="hidden sm:inline">Change password</span>
+                        </button>
+                        <button
                             data-testid="admin-logout"
                             onClick={async () => {
                                 await logout();
@@ -227,6 +237,10 @@ export default function Admin() {
                         onDelete={remove}
                     />
                 )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {pwOpen && <ChangePasswordModal onClose={() => setPwOpen(false)} />}
             </AnimatePresence>
         </div>
     );
@@ -542,6 +556,164 @@ function Info({ label, value }) {
         <div>
             <div className="overline mb-2">{label}</div>
             <div className="text-ink text-sm break-words">{value}</div>
+        </div>
+    );
+}
+
+
+function ChangePasswordModal({ onClose }) {
+    const [current, setCurrent] = useState('');
+    const [next, setNext] = useState('');
+    const [confirm, setConfirm] = useState('');
+    const [showCurrent, setShowCurrent] = useState(false);
+    const [showNext, setShowNext] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+
+    const submit = async (e) => {
+        e.preventDefault();
+        if (next.length < 8) {
+            toast.error('New password must be at least 8 characters.');
+            return;
+        }
+        if (next !== confirm) {
+            toast.error('New password and confirmation do not match.');
+            return;
+        }
+        if (next === current) {
+            toast.error('New password must be different from the current one.');
+            return;
+        }
+        setSubmitting(true);
+        try {
+            await changePassword(current, next);
+            toast.success('Password updated. Other sessions have been signed out.');
+            onClose();
+        } catch (err) {
+            const msg = err?.response?.data?.detail || 'Could not change password.';
+            toast.error(msg);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    return (
+        <motion.div
+            data-testid="change-password-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-bg-0/80 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={onClose}
+        >
+            <motion.form
+                onSubmit={submit}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 20, opacity: 0 }}
+                transition={{ ease: [0.7, 0, 0.2, 1], duration: 0.3 }}
+                className="w-full max-w-md bg-bg-1 border border-line"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <div className="flex items-center justify-between px-6 py-4 border-b border-line">
+                    <div className="flex items-center gap-3">
+                        <KeyRound size={16} className="text-brand" />
+                        <span className="font-display uppercase tracking-tight text-ink">
+                            Change password
+                        </span>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        data-testid="change-password-close"
+                        className="text-ink-2 hover:text-brand"
+                        aria-label="Close"
+                    >
+                        <X size={18} />
+                    </button>
+                </div>
+
+                <div className="px-6 py-6 space-y-5">
+                    <PwField
+                        label="Current password"
+                        value={current}
+                        onChange={setCurrent}
+                        show={showCurrent}
+                        toggle={() => setShowCurrent((v) => !v)}
+                        testid="current-password"
+                        autoFocus
+                    />
+                    <PwField
+                        label="New password"
+                        value={next}
+                        onChange={setNext}
+                        show={showNext}
+                        toggle={() => setShowNext((v) => !v)}
+                        testid="new-password"
+                        hint="Minimum 8 characters."
+                    />
+                    <PwField
+                        label="Confirm new password"
+                        value={confirm}
+                        onChange={setConfirm}
+                        show={showNext}
+                        toggle={() => setShowNext((v) => !v)}
+                        testid="confirm-password"
+                    />
+                </div>
+
+                <div className="px-6 py-4 border-t border-line flex justify-end gap-3">
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="inline-flex items-center gap-2 px-4 py-2 border border-line-strong text-ink-2 text-xs uppercase tracking-widest hover:text-ink"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={submitting}
+                        data-testid="change-password-submit"
+                        className="btn-fill inline-flex items-center gap-2 px-5 py-2 bg-brand text-white text-xs uppercase tracking-widest font-semibold disabled:opacity-50"
+                    >
+                        {submitting ? (
+                            <>
+                                <Loader2 size={14} className="animate-spin" /> Saving…
+                            </>
+                        ) : (
+                            <>Update password</>
+                        )}
+                    </button>
+                </div>
+            </motion.form>
+        </motion.div>
+    );
+}
+
+function PwField({ label, value, onChange, show, toggle, testid, hint, autoFocus }) {
+    return (
+        <div>
+            <label className="overline mb-2 block">{label}</label>
+            <div className="relative">
+                <input
+                    type={show ? 'text' : 'password'}
+                    value={value}
+                    onChange={(e) => onChange(e.target.value)}
+                    data-testid={testid}
+                    autoFocus={autoFocus}
+                    required
+                    className="w-full bg-bg-0 border border-line-strong text-ink text-sm px-3 py-2.5 pr-10 focus:outline-none focus:border-brand"
+                />
+                <button
+                    type="button"
+                    onClick={toggle}
+                    tabIndex={-1}
+                    aria-label={show ? 'Hide password' : 'Show password'}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-ink-3 hover:text-ink"
+                >
+                    {show ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+            </div>
+            {hint && <div className="text-ink-3 text-xs mt-1.5">{hint}</div>}
         </div>
     );
 }
