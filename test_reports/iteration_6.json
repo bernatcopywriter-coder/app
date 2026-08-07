@@ -1,0 +1,22 @@
+{
+  "summary": "Verified the new Emergent-managed Resend email notifications wired into POST /api/quotes and POST /api/contact. Full regression pytest suite (18/18) still green. Independent live verification: submitted quote (q_59a5385e246d) via ingress → HTTP 201 in <1s, response body {ok:true,quote_id:'q_...',message:'Thanks — ...'}; within ~1s /var/log/supervisor/backend.err.log contained the exact line `bernat - INFO - Email sent to alex@bernatsolutions.com (subject=New quote enquiry — Agent Co (q_59a5385e246d))`. Contact submission (m_8c8a3e311129) → HTTP 201 {ok:true,message_id:'m_...'}; log line `bernat - INFO - Email sent to alex@bernatsolutions.com (subject=New contact message — Testing Agent)` observed. Send-path source assertions: EMAIL_BASE_URL is the hardcoded constant 'https://integrations.emergentagent.com' in server.py:65 (not env-driven). Payload keys built in _send_email(): to (list), subject, html, from_name (== EMAIL_FROM_NAME == 'Bernat Solutions'), and contact_email set to the enquirer email when reply_to is provided. `grep -c 'from_name' server.py` = 1 (>=1 OK), `grep -c 'EMAIL_FROM_NAME' server.py` = 2 (>=2 OK). Frontend e2e: /quote submitted end-to-end (ref q_c5ecc4dca4c6) → quote-success testid visible with q_ reference; /contact submitted → contact-success testid visible. All test data cleaned up via admin DELETE + mongosh deleteMany.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py:319 _send_email is correctly fire-and-forget-safe: httpx errors are caught (HTTPStatusError + generic) and logged, never bubbled; a request to /api/quotes or /api/contact cannot be delayed or 500'd by an email proxy outage.",
+    "server.py:476 _fire_and_forget uses asyncio.get_running_loop().create_task(coro) inside the request handler — correct pattern; task keeps running after the response is sent because the event loop is the app-wide loop, not the request scope.",
+    "Reply-To semantics: the Emergent proxy contract uses 'contact_email' as the Reply-To surrogate — implementation matches spec (payload['contact_email'] = reply_to when provided).",
+    "Minor (non-blocking) — the reply_to param is set to the enquirer email for both endpoints; the Pydantic ContactMessage validates email format but the quote form uses EmailStr on Form(...), which is also validated. No injection risk into headers because Resend proxy handles header construction server-side.",
+    "Optional future hardening: record a metric/audit row in Mongo when email send fails (currently only logged) so ops can retry stuck notifications."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100% (18/18 pytest + live email log assertions for both endpoints)", "frontend": "100% (/quote + /contact e2e submissions succeed, success testids shown)"},
+  "test_credentials": "Admin: Authorization: Bearer test_session_admin_bernat (alex@bernatsolutions.com). Non-admin: test_session_nonadmin. Re-seeded via mongosh at start of run.",
+  "seed_data_creation": "Re-seeded admin + non-admin session tokens. Live test submissions (q_59a5385e246d, m_8c8a3e311129, q_c5ecc4dca4c6, contact from fe.agent@example.com) all cleaned up via admin DELETE / mongosh deleteMany. Lifecycle pytest self-cleans its own quote.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Email notifications go out fire-and-forget via asyncio.create_task, so the 201 comes back BEFORE the send. To assert the send, poll /var/log/supervisor/backend.err.log for the exact line 'bernat - INFO - Email sent to alex@bernatsolutions.com (subject=...)' with up to ~10s tolerance. EMAIL_BASE_URL is a constant in server.py (not env-driven) — do not move it back to os.environ. EMERGENT_EMAIL_KEY lives in /app/backend/.env and must never be echoed. Nothing else changed since iteration_5.",
+  "rca_of_the_issue": "N/A — this iteration is a feature verification (email notifications). No bug found."
+}

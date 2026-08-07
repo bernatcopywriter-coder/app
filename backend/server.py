@@ -5,6 +5,7 @@ gated behind Emergent Google OAuth.
 """
 from __future__ import annotations
 
+import asyncio
 import base64
 import logging
 import os
@@ -59,6 +60,12 @@ ALLOWED_FILE_EXT = {
 EMERGENT_SESSION_URL = (
     "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
 )
+
+# --- Emergent-managed Resend email (transactional notifications) -----------
+EMAIL_BASE_URL = "https://integrations.emergentagent.com"  # constant, survives deploy
+EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY")
+EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Bernat Solutions")
+OWNER_EMAIL = os.environ.get("OWNER_EMAIL", "alex@bernatsolutions.com")
 
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
@@ -306,6 +313,181 @@ def _client_ip(request: Request) -> str:
     return request.client.host if request.client else ""
 
 
+# ---------------------------------------------------------------------------
+# Email notifications (Emergent-managed Resend)
+# ---------------------------------------------------------------------------
+async def _send_email(
+    to: str, subject: str, html: str, reply_to: Optional[str] = None
+) -> None:
+    """POST to Emergent's managed email proxy. Failures are logged, not raised."""
+    if not EMAIL_KEY:
+        logger.warning("EMERGENT_EMAIL_KEY not set — skipping email send")
+        return
+    payload = {
+        "to": [to],
+        "subject": subject,
+        "html": html,
+        "from_name": EMAIL_FROM_NAME,
+    }
+    if reply_to:
+        payload["contact_email"] = reply_to
+    try:
+        async with httpx.AsyncClient(timeout=20) as http:
+            resp = await http.post(
+                f"{EMAIL_BASE_URL}/api/v1/email/send",
+                headers={"X-Email-Key": EMAIL_KEY},
+                json=payload,
+            )
+            resp.raise_for_status()
+            logger.info("Email sent to %s (subject=%s)", to, subject)
+    except httpx.HTTPStatusError as e:
+        logger.error(
+            "Email send failed: %s %s", e.response.status_code, e.response.text
+        )
+    except Exception as e:  # noqa: BLE001
+        logger.error("Email send error: %r", e)
+
+
+def _row(label: str, value: str) -> str:
+    if not value:
+        value = "—"
+    return (
+        f'<tr>'
+        f'<td style="padding:8px 12px;background:#f7f7f7;color:#555;'
+        f'font-family:Arial,sans-serif;font-size:13px;width:170px;'
+        f'border-bottom:1px solid #eee;">{label}</td>'
+        f'<td style="padding:8px 12px;color:#111;font-family:Arial,sans-serif;'
+        f'font-size:14px;border-bottom:1px solid #eee;">{value}</td>'
+        f'</tr>'
+    )
+
+
+def _build_quote_email_html(doc: dict) -> str:
+    processes = ", ".join(doc.get("processes") or []) or "—"
+    files = doc.get("files") or []
+    files_html = (
+        "".join(
+            f"<li style=\"font-family:Arial,sans-serif;font-size:13px;color:#111;\">"
+            f"{f.get('filename','file')} <span style=\"color:#888;\">"
+            f"({int(f.get('size', 0) / 1024)} KB)</span></li>"
+            for f in files
+        )
+        if files
+        else "<li style=\"font-family:Arial,sans-serif;font-size:13px;color:#888;\">No files attached</li>"
+    )
+    notes = (doc.get("notes") or "").replace("\n", "<br>") or "—"
+    return f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:32px 0;">
+  <tr><td align="center">
+    <table role="presentation" width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e5e5e5;">
+      <tr>
+        <td style="background:#0a0a0a;padding:24px 28px;">
+          <div style="font-family:Arial,sans-serif;color:#ff5a1f;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">New Enquiry</div>
+          <div style="font-family:Arial,sans-serif;color:#ffffff;font-size:22px;font-weight:600;margin-top:6px;">Bernat Solutions — Quote Request</div>
+          <div style="font-family:Arial,sans-serif;color:#a3a3a3;font-size:12px;margin-top:6px;">Ref: {doc.get('quote_id','')}</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:20px 28px 4px 28px;">
+          <div style="font-family:Arial,sans-serif;color:#555;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Contact</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            {_row('Name', doc.get('name',''))}
+            {_row('Company', doc.get('company',''))}
+            {_row('Email', doc.get('email',''))}
+            {_row('Phone', doc.get('phone',''))}
+            {_row('Postcode', doc.get('postcode','') or '—')}
+            {_row('Lead time', doc.get('lead_time','') or '—')}
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:20px 28px 4px 28px;">
+          <div style="font-family:Arial,sans-serif;color:#555;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Job</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            {_row('Material', doc.get('material','') or '—')}
+            {_row('Thickness / size', doc.get('thickness','') or '—')}
+            {_row('Quantity', doc.get('quantity','') or '—')}
+            {_row('Processes', processes)}
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:20px 28px;">
+          <div style="font-family:Arial,sans-serif;color:#555;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Notes</div>
+          <div style="font-family:Arial,sans-serif;color:#111;font-size:14px;line-height:1.5;background:#f7f7f7;padding:12px;border-left:3px solid #ff5a1f;">{notes}</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:0 28px 24px 28px;">
+          <div style="font-family:Arial,sans-serif;color:#555;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Drawings ({len(files)})</div>
+          <ul style="margin:0;padding-left:20px;">{files_html}</ul>
+        </td>
+      </tr>
+      <tr>
+        <td style="background:#f7f7f7;padding:14px 28px;font-family:Arial,sans-serif;font-size:12px;color:#666;">
+          Reply to this email to respond directly to {doc.get('name','the enquirer')}. Download drawings and manage status inside the admin dashboard.
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+</table>
+"""
+
+
+def _build_contact_email_html(doc: dict) -> str:
+    msg = (doc.get("message") or "").replace("\n", "<br>") or "—"
+    return f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:32px 0;">
+  <tr><td align="center">
+    <table role="presentation" width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e5e5e5;">
+      <tr>
+        <td style="background:#0a0a0a;padding:24px 28px;">
+          <div style="font-family:Arial,sans-serif;color:#ff5a1f;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">New Message</div>
+          <div style="font-family:Arial,sans-serif;color:#ffffff;font-size:22px;font-weight:600;margin-top:6px;">Bernat Solutions — Contact Form</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:20px 28px 4px 28px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            {_row('Name', doc.get('name',''))}
+            {_row('Company', doc.get('company','') or '—')}
+            {_row('Email', doc.get('email',''))}
+            {_row('Phone', doc.get('phone','') or '—')}
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:20px 28px;">
+          <div style="font-family:Arial,sans-serif;color:#555;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Message</div>
+          <div style="font-family:Arial,sans-serif;color:#111;font-size:14px;line-height:1.5;background:#f7f7f7;padding:12px;border-left:3px solid #ff5a1f;">{msg}</div>
+        </td>
+      </tr>
+      <tr>
+        <td style="background:#f7f7f7;padding:14px 28px;font-family:Arial,sans-serif;font-size:12px;color:#666;">
+          Reply to this email to respond directly to {doc.get('name','the enquirer')}.
+        </td>
+      </tr>
+    </table>
+  </td></tr>
+</table>
+"""
+
+
+def _fire_and_forget(coro) -> None:
+    """Schedule a coroutine without awaiting — used so a submission can return
+    immediately even if the email proxy is slow or errors."""
+    try:
+        asyncio.get_running_loop().create_task(coro)
+    except RuntimeError:
+        # No running loop (shouldn't happen inside FastAPI request), fall back
+        asyncio.run(coro)
+
+
+def _client_ip_orig(request: Request) -> str:
+    """Legacy alias — kept for import safety, delegates to _client_ip."""
+    return _client_ip(request)
+
+
 @api.post("/quotes", status_code=201)
 async def create_quote(
     request: Request,
@@ -384,6 +566,16 @@ async def create_quote(
     await db.quotes.insert_one(doc)
     logger.info("New quote %s from %s (%s)", quote_id, email, company)
 
+    # Fire-and-forget email notification to the owner
+    _fire_and_forget(
+        _send_email(
+            to=OWNER_EMAIL,
+            subject=f"New quote enquiry — {doc['company']} ({quote_id})",
+            html=_build_quote_email_html(doc),
+            reply_to=doc["email"],
+        )
+    )
+
     return {
         "ok": True,
         "quote_id": quote_id,
@@ -410,6 +602,17 @@ async def submit_contact(payload: ContactMessage, request: Request) -> dict:
         "read": False,
     }
     await db.contact_messages.insert_one(doc)
+
+    # Fire-and-forget email notification to the owner
+    _fire_and_forget(
+        _send_email(
+            to=OWNER_EMAIL,
+            subject=f"New contact message — {doc['name']}",
+            html=_build_contact_email_html(doc),
+            reply_to=doc["email"],
+        )
+    )
+
     return {"ok": True, "message_id": doc["message_id"]}
 
 
