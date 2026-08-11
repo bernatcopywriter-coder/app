@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#0a0a0a"/>
+  <rect x="6" y="6" width="52" height="52" fill="none" stroke="#2f5d3a" stroke-width="4"/>
+  <text
+    x="32"
+    y="42"
+    text-anchor="middle"
+    font-family="'Oswald','Arial Narrow',Impact,Arial,sans-serif"
+    font-weight="600"
+    font-size="26"
+    letter-spacing="2"
+    fill="#2f5d3a"
+  >KM</text>
+</svg>
