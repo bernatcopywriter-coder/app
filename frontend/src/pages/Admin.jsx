@@ -138,9 +138,14 @@ export default function Admin() {
             <header className="sticky top-0 z-40 border-b border-line bg-bg-0/90 backdrop-blur-xl">
                 <div className="container-x flex items-center justify-between h-16">
                     <Link to="/" className="flex items-center gap-3">
-                        <img src="/favicon.png" alt="Bernat Solutions" className="w-7 h-7 object-contain" />
+                        <span
+                            aria-hidden
+                            className="w-8 h-8 border border-brand flex items-center justify-center text-brand font-display text-[13px] font-semibold tracking-widest"
+                        >
+                            KM
+                        </span>
                         <span className="font-display uppercase tracking-tight text-lg">
-                            Bernat Solutions <span className="text-ink-3">/ Admin</span>
+                            Kingsford Metals <span className="text-ink-3">/ Admin</span>
                         </span>
                     </Link>
                     <div className="flex items-center gap-4 text-sm">
@@ -532,7 +537,7 @@ function QuoteDrawer({ quote, onClose, onStatus, onDelete }) {
 
                     <div className="mt-12 pt-6 border-t border-line flex justify-between items-center">
                         <a
-                            href={`mailto:${quote.email}?subject=Re: Your Bernat Solutions enquiry ${quote.quote_id}`}
+                            href={`mailto:${quote.email}?subject=Re: Your Kingsford Metals enquiry ${quote.quote_id}`}
                             className="btn-fill inline-flex items-center gap-2 px-5 py-3 bg-brand text-white text-xs uppercase tracking-widest font-semibold"
                         >
                             <MailIcon size={14} /> Reply

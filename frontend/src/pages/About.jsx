@@ -7,23 +7,23 @@ import CTASection from '@/components/CTASection';
 const VALUES = [
     {
         n: '01',
-        title: 'Shopfloor eyes',
-        text: 'Every enquiry is read by someone who has actually stood beside a laser and a press brake — so the quote reflects the real job, not a checkbox.',
+        title: 'Engineering understanding',
+        text: 'Every enquiry is reviewed by someone who understands drawings, tolerances and how the part is actually going to be made — so the quote reflects the real job.',
     },
     {
         n: '02',
-        title: 'Straight talk',
-        text: 'If a job needs tweaking to cut cost or speed up delivery, we say so. If something is going to slip, we say so before you have to ask.',
+        title: 'Straight communication',
+        text: 'Clear pricing, honest lead times, and early warning if anything looks likely to slip. No jargon, no hidden extras.',
     },
     {
         n: '03',
         title: 'One point of contact',
-        text: 'No account manager relay. You email one person, that person owns the enquiry from drawing to delivery — cutting, folding, finishing and all.',
+        text: 'You email one person who owns the job from enquiry through to delivery — cutting, folding, welding, finishing and dispatch.',
     },
     {
         n: '04',
-        title: 'Lean by design',
-        text: 'A lean, sharp operation with a strong UK supplier network. Faster quotes, better fit for the job, fewer people to lose the plot in the middle.',
+        title: 'Dependable delivery',
+        text: 'Careful coordination behind the scenes so quoted lead times are the lead times you actually get.',
     },
 ];
 
@@ -32,8 +32,8 @@ export default function About() {
         <div data-testid="about-page">
             <PageHero
                 overline="About"
-                title={['Built on the', 'shopfloor.', 'Sharpened for buyers.']}
-                subtitle="Bernat Solutions was built from hands-on experience in steel processing, laser cutting, press brake work, estimating, drawings and customer account management. We understand both the shopfloor and the customer side — so enquiries are handled properly, drawings are understood, and communication stays clear."
+                title={['A straightforward', 'metalwork supplier.']}
+                subtitle="Kingsford Metals provides UK businesses with a straightforward way to source laser cutting, folding, fabrication and associated metalwork. We coordinate the manufacturing process from enquiry through to delivery — giving customers one reliable point of contact across multiple processes."
                 image="https://images.unsplash.com/photo-1567789884554-0b844b597180"
             />
 
@@ -48,30 +48,30 @@ export default function About() {
                     >
                         <div className="overline brand mb-5">
                             <span className="inline-block w-6 h-px bg-brand mr-3 align-middle" />
-                            The Idea
+                            Our Focus
                         </div>
                         <h2 className="h-display text-[clamp(2rem,5vw,4rem)] text-ink mb-8">
-                            A sharper way to source cutting, fabrication and finishing.
+                            Reliable metalwork. One point of contact.
                         </h2>
                         <div className="space-y-6 text-ink-2 text-lg leading-relaxed">
                             <p>
-                                Too many UK buyers know the routine. Send a drawing to one
-                                supplier for laser cutting, another for folding, a third for
-                                welding, a fourth for finishing. Wait days for each quote.
-                                Chase. Chase again. Then piece the job together yourself.
-                                Bernat Solutions was built to end that pattern.
+                                Sourcing metalwork should not mean managing five suppliers.
+                                Most engineering and procurement teams have felt it — a
+                                drawing sent to one shop for laser cutting, another for
+                                folding, a third for welding, a fourth for finishing. Days
+                                spent chasing quotes and coordinating deliveries.
                             </p>
                             <p>
-                                We don&apos;t claim to own the machines. What we do is act
-                                as one clear point of contact — sourcing and managing the
-                                right cutting, profiling, fabrication and finishing route
-                                through our UK supplier network. Drawings get read properly,
-                                jobs get matched to the right shop, and communication stays
-                                clear from the first email through to delivery.
+                                Kingsford Metals provides a simpler route. We handle laser
+                                cutting, folding, fabrication, welding and finishing as a
+                                single piece of work — quoted competitively, coordinated
+                                carefully, and delivered on time. You send the drawings; we
+                                manage the rest.
                             </p>
                             <p>
-                                Lean, sharp and reliable — a serious backup or main supplier
-                                for companies who want fewer surprises and better answers.
+                                Our focus is simple: competitive pricing, dependable supply,
+                                clear communication and consistent quality — whether the job
+                                is a one-off part or a repeat production batch.
                             </p>
                         </div>
                     </motion.div>
@@ -80,17 +80,17 @@ export default function About() {
                         <div className="relative overflow-hidden border border-line-strong aspect-[3/4]">
                             <img
                                 src="https://images.pexels.com/photos/12475054/pexels-photo-12475054.jpeg"
-                                alt="Welding sparks in an industrial workshop — representative supplier-network capability image"
+                                alt="Welding sparks in an industrial workshop"
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-bg-0 via-transparent to-transparent" />
                             <div className="absolute top-4 left-4 text-[10px] uppercase tracking-widest text-ink-3 bg-bg-0/60 px-2 py-1 border border-line-strong">
-                                Representative supplier-network image
+                                Representative workshop image
                             </div>
                             <div className="absolute bottom-6 left-6 right-6">
                                 <div className="overline brand mb-1">UK-wide</div>
                                 <div className="h-display text-3xl text-ink">
-                                    Nottinghamshire based · UK supplier network
+                                    Nottinghamshire based · Serving the UK
                                 </div>
                             </div>
                         </div>

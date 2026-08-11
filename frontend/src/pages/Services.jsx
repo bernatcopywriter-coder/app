@@ -9,9 +9,9 @@ export default function Services() {
     return (
         <div data-testid="services-page">
             <PageHero
-                overline="Services"
+                overline="Capabilities"
                 title={['A single source', 'for cutting, fabrication', 'and finishing.']}
-                subtitle="Bernat Solutions helps UK businesses source and manage laser cutting, tube and section cutting, heavy plate profiling, folding, fabrication and finishing through a trusted supplier network — quoted and coordinated as one job."
+                subtitle="Kingsford Metals coordinates laser cutting, tube and section cutting, heavy plate profiling, folding, fabrication, welding and finishing for UK businesses — quoted and delivered as one job."
                 image="/services/laser-flat.jpg"
             />
             <ServicesShowcase />

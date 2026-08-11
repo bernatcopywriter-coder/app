@@ -7,8 +7,9 @@ export default function Terms() {
             <section className="py-16 sm:py-24 border-b border-line bg-bg-0">
                 <div className="container-x max-w-3xl space-y-6 text-ink-2 text-base leading-relaxed">
                     <p>
-                        These terms govern your use of the Bernat Solutions website. By using
+                        These terms govern your use of the Kingsford Metals website. By using
                         this site or submitting an enquiry you accept the terms below.
+                        Kingsford Metals is a trading name of Bernat Solutions Ltd.
                     </p>
                     <h2 className="h-display text-2xl text-ink pt-6">Quotes and orders</h2>
                     <p>

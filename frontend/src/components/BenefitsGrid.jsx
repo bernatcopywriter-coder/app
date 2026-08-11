@@ -22,7 +22,7 @@ export default function BenefitsGrid() {
                             Why Use Us
                         </div>
                         <h2 className="h-display text-[clamp(2rem,5.5vw,4.5rem)] text-ink max-w-[18ch]">
-                            One point of contact. A full supplier network behind it.
+                            One point of contact. Every process handled.
                         </h2>
                     </motion.div>
 
@@ -33,10 +33,10 @@ export default function BenefitsGrid() {
                         transition={{ duration: 0.7, delay: 0.1 }}
                         className="lg:col-span-5 text-ink-2 text-lg leading-relaxed"
                     >
-                        Bernat Solutions helps source and manage steelwork through a trusted
-                        UK supplier network — matching every job to the right process,
-                        material and production route. Six commitments we make to every
-                        enquiry.
+                        Kingsford Metals coordinates laser cutting, folding, fabrication,
+                        welding and finishing for UK businesses — matching every job to the
+                        right process, material and production route. Six commitments we make
+                        to every enquiry.
                     </motion.p>
                 </div>
 

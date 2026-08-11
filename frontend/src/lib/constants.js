@@ -1,13 +1,13 @@
 export const NAV_LINKS = [
     { label: 'Home', to: '/' },
-    { label: 'Services', to: '/services' },
+    { label: 'Capabilities', to: '/services' },
     { label: 'Industries', to: '/industries' },
     { label: 'About', to: '/about' },
     { label: 'Contact', to: '/contact' },
 ];
 
 /**
- * Five service categories that group the full supplier-network capability.
+ * Five service categories that group the full metalwork capability.
  * Each category page lists the specific processes it covers.
  */
 export const SERVICES = [
@@ -17,7 +17,7 @@ export const SERVICES = [
         title: 'Laser Cutting',
         strap: 'Flat Sheet · Mild · Stainless · Aluminium',
         blurb:
-            'Flat sheet laser cutting for mild steel, stainless steel, aluminium and other materials. Suitable for brackets, plates, panels, guards, profiles, components and repeat batch work — sourced through our UK supplier network.',
+            'Precision flat laser cutting across mild steel, stainless steel, aluminium and other materials. Suitable for brackets, plates, panels, guards, profiles, components and repeat batch production.',
         details: [
             'Fibre laser cutting on flat sheet',
             'Mild steel, stainless, aluminium, copper, brass',
@@ -35,7 +35,7 @@ export const SERVICES = [
         title: 'Tube & Section Cutting',
         strap: 'Tube · Box · Angle · Channel',
         blurb:
-            'Support for tube, box section, angle, channel and open-section cutting. Ideal for frames, structures and fabricated assemblies that need accurate cut-outs, mitres, holes or complex profiles.',
+            'Laser cutting and processing of tube, box section, angle, channel and open-section profiles. Ideal for frames, structures and fabricated assemblies that need accurate cut-outs, mitres, holes or complex profiles.',
         details: [
             'Round tube, square and rectangular box section',
             'Angle, channel and open-section profiles',
@@ -53,7 +53,7 @@ export const SERVICES = [
         title: 'Heavy Plate Profiling',
         strap: 'Flame · Plasma · Waterjet · Bevel',
         blurb:
-            'Thick plate and heavy-duty profiling routed through the process that best suits the job — flame, high-definition plasma or waterjet — including bevel cutting and weld preparation.',
+            'Profiling of thicker materials using the process best suited to the job — flame, high-definition plasma or waterjet — including bevel cutting and weld preparation.',
         details: [
             'Flame cutting for heavy mild and carbon steel plate',
             'High-definition plasma for medium to heavy plate',
@@ -68,10 +68,10 @@ export const SERVICES = [
     {
         slug: 'folding-fabrication',
         n: '04',
-        title: 'Folding & Fabrication',
+        title: 'Fabrication & Welding',
         strap: 'Press Brake · Welding · Assembly',
         blurb:
-            'Sheet metal folding, press brake work and full welded fabrication. From simple folded brackets to complex structural assemblies — sourced and managed as a single piece of work.',
+            'CNC press brake folding, welded fabrication and assembly. From simple folded brackets to complex structural assemblies — quoted and delivered as a single piece of work.',
         details: [
             'CNC press brake folding on sheet and plate',
             'Trays, channels, brackets, guards, enclosures',
@@ -89,16 +89,16 @@ export const SERVICES = [
         slug: 'finishing-secondary',
         n: '05',
         title: 'Finishing & Secondary Ops',
-        strap: 'Deburr · Blast · Coat · Etch · Tap',
+        strap: 'Powder Coating · Galvanising · Machining',
         blurb:
-            'The operations that turn cut and folded parts into finished, assembly-ready components — deburring, shot blasting, coatings, marking and secondary machining, all coordinated through our supplier network.',
+            'The operations that turn cut and folded parts into finished, assembly-ready components — deburring, blasting, powder coating, painting, galvanising, plating, tapping, countersinking and machining.',
         details: [
+            'Powder coating and wet painting',
+            'Galvanising, zinc plating and passivation',
             'Deburring, vibro-deburring and edge finishing',
             'Shot blasting for surface prep and cleaning',
-            'Powder coating, wet painting and polishing',
-            'Zinc plating, galvanising and passivation',
-            'Laser etching, engraving and part marking',
             'Countersinking, flow drilling and tapping',
+            'Laser etching, engraving and part marking',
         ],
         image: '/services/powder-coating.jpg',
         imageAlt: 'Powder coating finished steel components',
@@ -106,8 +106,7 @@ export const SERVICES = [
 ];
 
 /**
- * Full capability list — appears on the homepage capabilities strip
- * and reinforces the wider supplier-network capability.
+ * Full capability list — appears on the homepage capabilities strip.
  */
 export const CAPABILITIES = [
     { g: 'Cutting & Profiling', items: [
@@ -170,17 +169,17 @@ export const BENEFITS = [
     {
         n: '02',
         title: 'More Capability',
-        text: 'Access to multiple cutting, profiling, fabrication and finishing processes through a single UK supplier network — matched to the job.',
+        text: 'Laser cutting, folding, fabrication, welding and finishing all handled under one supplier — matched to the job.',
     },
     {
         n: '03',
-        title: 'Better Supplier Fit',
-        text: 'Jobs are matched to the most suitable process, material and production route — not forced through whatever a single shop can offer.',
+        title: 'The Right Process',
+        text: 'Jobs are matched to the most suitable process and material for the requirement — not forced through the wrong route.',
     },
     {
         n: '04',
-        title: 'Useful Backup Supplier',
-        text: 'Ideal when your usual supplier is too busy, slow to quote, or unable to handle the full job — same drawings, straight answers.',
+        title: 'Main or Backup Supplier',
+        text: 'Suitable as your main metalwork supplier, or as a dependable backup when your usual shop is at capacity.',
     },
     {
         n: '05',
@@ -233,7 +232,7 @@ export const PROCESS_STEPS = [
     {
         n: '02',
         title: 'We Review the Job',
-        text: 'We read the drawings, check materials, quantities and processes, and identify the right route through our supplier network.',
+        text: 'We read the drawings, check materials, quantities and processes, and confirm the right approach.',
     },
     {
         n: '03',
@@ -243,7 +242,7 @@ export const PROCESS_STEPS = [
     {
         n: '04',
         title: 'We Manage the Work',
-        text: 'Once approved, we coordinate sourcing, cutting, folding, fabrication, finishing and delivery — and keep you posted at every stage.',
+        text: 'Once approved, we coordinate cutting, folding, fabrication, welding, finishing and delivery — and keep you informed at every stage.',
     },
 ];
 

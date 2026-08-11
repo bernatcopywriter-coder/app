@@ -41,9 +41,9 @@ export default function IndustryChips() {
                         transition={{ duration: 0.7, delay: 0.1 }}
                         className="lg:col-span-5 text-ink-2 text-lg leading-relaxed"
                     >
-                        From one-off maintenance parts to repeat production batches — Bernat
-                        Solutions supports engineering, construction, manufacturing and
-                        specialist trades across the UK through our supplier network.
+                        From one-off maintenance parts to repeat production batches —
+                        Kingsford Metals supports engineering, construction, manufacturing
+                        and specialist trades across the UK.
                     </motion.p>
                 </div>
 

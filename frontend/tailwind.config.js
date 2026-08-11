@@ -50,8 +50,8 @@ module.exports = {
                 input: 'hsl(var(--input))',
                 ring: 'hsl(var(--ring))',
                 brand: {
-                    DEFAULT: '#ff5a1f',
-                    hover: '#e64a12',
+                    DEFAULT: '#2f5d3a',
+                    hover: '#3a7448',
                 },
                 ink: {
                     DEFAULT: '#f4f4f5',

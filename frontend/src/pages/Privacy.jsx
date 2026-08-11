@@ -7,9 +7,10 @@ export default function Privacy() {
             <section className="py-16 sm:py-24 border-b border-line bg-bg-0">
                 <div className="container-x max-w-3xl space-y-6 text-ink-2 text-base leading-relaxed">
                     <p>
-                        This privacy policy explains how Bernat Solutions (&quot;we&quot;,
-                        &quot;us&quot;) collects and uses your information when you request a
-                        quote, submit a contact enquiry, or otherwise interact with our website.
+                        This privacy policy explains how Kingsford Metals (a trading name of
+                        Bernat Solutions Ltd) (&quot;we&quot;, &quot;us&quot;) collects and
+                        uses your information when you request a quote, submit a contact
+                        enquiry, or otherwise interact with our website.
                     </p>
                     <h2 className="h-display text-2xl text-ink pt-6">What we collect</h2>
                     <p>

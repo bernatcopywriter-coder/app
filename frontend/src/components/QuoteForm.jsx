@@ -295,10 +295,10 @@ export default function QuoteForm() {
                         checked={state.consent}
                         onChange={(e) => setState((s) => ({ ...s, consent: e.target.checked }))}
                         data-testid="qf-consent"
-                        className="mt-1 w-4 h-4 accent-[#ff5a1f]"
+                        className="mt-1 w-4 h-4 accent-[#2f5d3a]"
                     />
                     <span className="text-sm text-ink-2 max-w-md">
-                        I understand Bernat Solutions may contact me for clarification on
+                        I understand Kingsford Metals may contact me for clarification on
                         my enquiry.
                     </span>
                 </label>

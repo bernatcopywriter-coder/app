@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { CAPABILITIES } from '@/lib/constants';
 
-/** Comprehensive supplier-network capability list — homepage strip. */
+/** Comprehensive capability list — homepage strip. */
 export default function CapabilitiesStrip() {
     return (
         <section
@@ -19,10 +19,10 @@ export default function CapabilitiesStrip() {
                     >
                         <div className="overline brand mb-5">
                             <span className="inline-block w-6 h-px bg-brand mr-3 align-middle" />
-                            Full Supplier-Network Capability
+                            Full Metalwork Capability
                         </div>
                         <h2 className="h-display text-[clamp(2rem,5.5vw,4.5rem)] text-ink max-w-[22ch]">
-                            Cutting, profiling, fabrication and finishing — all sourced through one point of contact.
+                            Cutting, folding, fabrication and finishing — all handled under one supplier.
                         </h2>
                     </motion.div>
                     <motion.p
@@ -34,8 +34,7 @@ export default function CapabilitiesStrip() {
                     >
                         Whether you need simple mild steel laser-cut brackets, folded
                         stainless components, aluminium panels, heavy plate profiles or
-                        fabrication-ready steelwork, we can help source the right process
-                        through our UK supplier network.
+                        welded steelwork, Kingsford Metals covers the full job.
                     </motion.p>
                 </div>
 

@@ -1,5 +1,5 @@
 """
-Bernat Solutions — Backend API
+Kingsford Metals — Backend API
 FastAPI + MongoDB. Handles public quote/contact submissions and admin dashboard
 gated behind Emergent Google OAuth.
 """
@@ -73,13 +73,13 @@ _LOGIN_WINDOW = 900  # 15 min
 # --- Emergent-managed Resend email (transactional notifications) -----------
 EMAIL_BASE_URL = "https://integrations.emergentagent.com"  # constant, survives deploy
 EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY")
-EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Bernat Solutions")
+EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Kingsford Metals")
 OWNER_EMAIL = os.environ.get("OWNER_EMAIL", "alex@bernatsolutions.com")
 
 client = AsyncIOMotorClient(MONGO_URL)
 db = client[DB_NAME]
 
-app = FastAPI(title="Bernat Solutions API")
+app = FastAPI(title="Kingsford Metals API")
 api = APIRouter(prefix="/api")
 
 logging.basicConfig(
@@ -528,8 +528,8 @@ def _build_quote_email_html(doc: dict) -> str:
     <table role="presentation" width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e5e5e5;">
       <tr>
         <td style="background:#0a0a0a;padding:24px 28px;">
-          <div style="font-family:Arial,sans-serif;color:#ff5a1f;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">New Enquiry</div>
-          <div style="font-family:Arial,sans-serif;color:#ffffff;font-size:22px;font-weight:600;margin-top:6px;">Bernat Solutions — Quote Request</div>
+          <div style="font-family:Arial,sans-serif;color:#2f5d3a;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">New Enquiry</div>
+          <div style="font-family:Arial,sans-serif;color:#ffffff;font-size:22px;font-weight:600;margin-top:6px;">Kingsford Metals — Quote Request</div>
           <div style="font-family:Arial,sans-serif;color:#a3a3a3;font-size:12px;margin-top:6px;">Ref: {doc.get('quote_id','')}</div>
         </td>
       </tr>
@@ -560,7 +560,7 @@ def _build_quote_email_html(doc: dict) -> str:
       <tr>
         <td style="padding:20px 28px;">
           <div style="font-family:Arial,sans-serif;color:#555;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Notes</div>
-          <div style="font-family:Arial,sans-serif;color:#111;font-size:14px;line-height:1.5;background:#f7f7f7;padding:12px;border-left:3px solid #ff5a1f;">{notes}</div>
+          <div style="font-family:Arial,sans-serif;color:#111;font-size:14px;line-height:1.5;background:#f7f7f7;padding:12px;border-left:3px solid #2f5d3a;">{notes}</div>
         </td>
       </tr>
       <tr>
@@ -588,8 +588,8 @@ def _build_contact_email_html(doc: dict) -> str:
     <table role="presentation" width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #e5e5e5;">
       <tr>
         <td style="background:#0a0a0a;padding:24px 28px;">
-          <div style="font-family:Arial,sans-serif;color:#ff5a1f;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">New Message</div>
-          <div style="font-family:Arial,sans-serif;color:#ffffff;font-size:22px;font-weight:600;margin-top:6px;">Bernat Solutions — Contact Form</div>
+          <div style="font-family:Arial,sans-serif;color:#2f5d3a;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">New Message</div>
+          <div style="font-family:Arial,sans-serif;color:#ffffff;font-size:22px;font-weight:600;margin-top:6px;">Kingsford Metals — Contact Form</div>
         </td>
       </tr>
       <tr>
@@ -605,7 +605,7 @@ def _build_contact_email_html(doc: dict) -> str:
       <tr>
         <td style="padding:20px 28px;">
           <div style="font-family:Arial,sans-serif;color:#555;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Message</div>
-          <div style="font-family:Arial,sans-serif;color:#111;font-size:14px;line-height:1.5;background:#f7f7f7;padding:12px;border-left:3px solid #ff5a1f;">{msg}</div>
+          <div style="font-family:Arial,sans-serif;color:#111;font-size:14px;line-height:1.5;background:#f7f7f7;padding:12px;border-left:3px solid #2f5d3a;">{msg}</div>
         </td>
       </tr>
       <tr>
@@ -906,7 +906,7 @@ async def _seed_admin() -> None:
         await db.users.insert_one({
             "user_id": f"user_{uuid.uuid4().hex[:12]}",
             "email": email,
-            "name": "Bernat Admin",
+            "name": "Kingsford Metals Admin",
             "picture": None,
             "password_hash": hashed,
             "created_at": datetime.now(timezone.utc).isoformat(),
@@ -917,6 +917,6 @@ async def _seed_admin() -> None:
         hashed = _hash_password(ADMIN_PASSWORD)
         await db.users.update_one(
             {"email": email},
-            {"$set": {"password_hash": hashed, "name": existing.get("name") or "Bernat Admin"}},
+            {"$set": {"password_hash": hashed, "name": existing.get("name") or "Kingsford Metals Admin"}},
         )
         logger.info("Set initial password for existing admin %s", email)

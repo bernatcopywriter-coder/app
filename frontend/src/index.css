@@ -1,5 +1,5 @@
-/* Bernat Solutions — Global styles
-   Industrial Luxury / High-End Brutalism */
+/* Kingsford Metals — Global styles
+   Established British Engineering / Industrial Restraint */
 
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap');
 
@@ -17,8 +17,8 @@
     --ink: #f4f4f5;
     --ink-2: #a3a3a3;
     --ink-3: #737373;
-    --brand: #ff5a1f;
-    --brand-hover: #e64a12;
+    --brand: #2f5d3a;
+    --brand-hover: #3a7448;
     --steel: #2a3439;
 
     /* shadcn dark tokens tuned to industrial palette */
@@ -34,13 +34,13 @@
     --secondary-foreground: 0 0% 96%;
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 60%;
-    --accent: 15 100% 55%;
+    --accent: 132 33% 28%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62% 40%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 15 100% 55%;
+    --ring: 132 33% 28%;
     --radius: 0.125rem;
 }
 
@@ -237,7 +237,7 @@ html.lenis body {
     inset: -50%;
     background: radial-gradient(
         400px circle at var(--mx, 50%) var(--my, 50%),
-        rgba(255, 90, 31, 0.15),
+        rgba(47, 93, 58, 0.18),
         transparent 45%
     );
     opacity: 0;

@@ -1,60 +1,143 @@
-# Bernat Solutions — PRD
+# Kingsford Metals — PRD
 
-## Problem statement (verbatim, condensed)
-Build a professional, high-converting B2B website for **Bernat Solutions** — a UK steel + laser cutting + fabrication business that helps companies **source and manage** work through a **trusted UK supplier network**. Primary CTA "Request a Quote", secondary "Send Your Drawings". Modern, industrial, premium, trustworthy. Dark charcoal + white text with an orange accent. Full multi-page site + gated admin dashboard for submitted enquiries.
+> **Legal:** Kingsford Metals is a trading name of **Bernat Solutions Ltd**.
+> Domain: `bernatsolutions.com` (owned by the parent company; retained).
+> Customer-facing brand throughout the site: **Kingsford Metals**.
 
-User creative directive: **Awwwards Site-of-the-Day level**. Bold cohesive art direction — kinetic hero, masked line reveal, editorial marquee, numbered manifesto chapters, industrial photography, framer-motion + lenis smooth scrolling, subtle parallax hero.
+---
 
-## User personas
-- **Purchasing manager** at an engineering / manufacturing / construction firm looking for a quick, reliable quote or a backup supplier.
-- **Contractor / maintenance lead** needing one-off urgent fabrication work.
-- **Fabricator / stockholder** looking for subcontract laser + folding capacity.
-- **Alex (owner)** — needs a clean admin dashboard to see enquiries and reply.
+## Product Overview
 
-## Core requirements (static)
-- Multi-page marketing site (Home, Services, 5 service detail pages, Industries, About, Quote, Contact, Privacy, Terms).
-- Detailed quote form with drawing file upload (PDF/DXF/DWG/STEP/STL/images/ZIP).
-- Admin dashboard, Google-auth gated, shows quote submissions + contact messages, status lifecycle, file downloads.
-- Local SEO (Nottinghamshire, Derbyshire, South Yorkshire, UK-wide).
-- Award-worthy design & motion — lenis smooth scroll, framer-motion reveals, marquee, spotlight cards, parallax hero.
-- **Positioning consistency**: Never claim to own machines. Always use "through our UK supplier network / helps source and manage / one point of contact".
+A professional, high-converting B2B website for **Kingsford Metals**, a UK
+metalwork and manufacturing supplier. The site generates quote enquiries
+(including drawing/CAD uploads) for services like laser cutting, folding,
+fabrication, welding and finishing. Customers see Kingsford Metals as their
+metalwork supplier — one point of contact managing the manufacturing
+process from enquiry through to delivery.
 
-## Tech + integrations
-- FastAPI + Motor (MongoDB) + Emergent-managed Google OAuth (admin only).
-- React 19 + react-router-dom + framer-motion + lenis + react-fast-marquee + shadcn/ui + tailwind + sonner.
-- File storage: base64 inside quote document in MongoDB (MVP-appropriate).
-- Email notifications: NOT wired (user chose to skip). Enquiries live in DB and admin dashboard.
+## Brand Positioning
 
-## What has been implemented
-### 2026-07-09 · MVP
-- Backend REST API: /api/quotes, /api/contact, /api/auth/session, /api/auth/me, /api/auth/logout, /api/admin/quotes (list/detail/patch/delete), /api/admin/quotes/{id}/files/{file_id} download, /api/admin/messages. Honeypot spam guard on quote + contact. File size/type validation.
-- Frontend: kinetic hero with parallax + masked line reveal, editorial marquee, benefits grid, services showcase, manifesto chapters, industries strip, trust blocks, CTA section. Quote form (drag & drop, chip multi-select, sticky sidebar), contact form, service detail pages, About, Industries with per-sector narratives, Privacy + Terms.
-- Auth: Emergent Google OAuth flow. Admin allowlist enforced server-side.
-- Admin dashboard: stats row, tabbed table (quotes + messages), status dropdown, slide-in drawer with file downloads, delete action.
-- Iteration 1 tests: backend 15/15 + frontend 34/34.
+Established · Trustworthy · British · Industrial · Professional · Dependable ·
+Straightforward · Premium without looking flashy.
 
-### 2026-07-09 · Content overhaul + branding
-- **Positioning rewrite**: All copy now says "source and manage / UK supplier network / one point of contact". No "our machines / our factory" language anywhere.
-- **Restructured 5 service categories** with new slugs: `/services/laser-cutting`, `/services/tube-section-cutting`, `/services/heavy-plate-profiling`, `/services/folding-fabrication`, `/services/finishing-secondary`.
-- **New home sections**: CapabilitiesStrip (18 supplier-network processes in 4 groups) and MaterialsStrip (16 materials + specialist tag).
-- **Expanded quote form**: 20 process chip options (laser, tube laser, waterjet, flame, plasma, bevel/weld prep, folding, welding, fabrication, deburring, shot blast, laser etching, countersink, tapping, powder coat, paint, polish, plating, material supply, other). 15 material dropdown options (mild steel, S275, S355, stainless, aluminium, copper, brass, bronze, titanium, galvanised, Zintec, durbar, wear plate, boiler plate, other).
-- **Materials list** across the site: mild steel, carbon steel, S275, S355, stainless, aluminium, copper, brass, bronze, titanium, galvanised, Zintec, durbar, wear plate, boiler plate, high-yield structural.
-- **Marquee** expanded to 19 process items; font size tuned.
-- **Imagery**: replaced desk/office/solar-panel photos with real industrial imagery (fibre laser cutting head, steel section, welder with sparks). Every service card carries "Representative supplier-network image" disclosure + descriptive alt-text.
-- **Branding**: added user-supplied bolt favicon (`/favicon.png`) + logo (`/logo.png`) to Nav, Footer, Login and Admin.
-- **SEO**: expanded meta keywords + description across pages.
-- **A11y**: fixed hero H1 whitespace so aria-label reads correctly.
-- Iteration 2 tests: backend 16/16 + frontend 100/100 assertions (with new-process test file).
+Avoid: startup, SaaS, trendy design agency, futuristic manufacturing, cheap
+local welding shop feel.
 
-## What's next (backlog)
-- **P1** Wire email notification via Resend/SendGrid on new quote submission (currently DB-only).
-- **P1** Case studies / project gallery for social proof (per-industry).
-- **P2** Rate-limit `/api/quotes` and `/api/contact` (only honeypot today).
-- **P2** Move file storage to GridFS/S3 when documents grow.
-- **P2** Sitemap.xml + robots.txt for local SEO.
-- **P2** Admin: filters, search, CSV export of enquiries.
-- **P3** Add per-service microcopy for local pages (e.g. `/laser-cutting/nottingham`) to strengthen local SEO.
+## Core Offering
 
-## Test credentials
-- Admin: `alex@bernatsolutions.com` via Google Auth (allowlist enforced server-side).
-- Local test session: `session_token=test_session_admin_bernat` (see `/app/memory/test_credentials.md`).
+- **Laser Cutting** — flat sheet, mild steel, stainless, aluminium
+- **Tube & Section Cutting** — tube, box section, angle, channel
+- **Heavy Plate Profiling** — flame, plasma, waterjet, bevel
+- **Fabrication & Welding** — CNC press brake folding, MIG/TIG/MMA welding, assembly
+- **Finishing & Secondary Ops** — powder coating, painting, galvanising,
+  deburring, tapping, countersinking, machining
+
+## Design System
+
+- **Colour palette:** deep charcoal / near black backgrounds (`#0a0a0a`,
+  `#111111`), off-white ink, steel grey lines, **dark British green** accent
+  (`#2f5d3a` primary, `#3a7448` hover). Accent used sparingly for buttons,
+  links, icons and active states.
+- **Typography:** Oswald (display, uppercase) + Manrope (body). Wordmark is
+  a stacked "KINGSFORD / METALS" mark with a bordered "KM" monogram.
+- **Motion:** Framer Motion + Lenis smooth scroll retained.
+
+## Tech Stack
+
+- **Frontend:** React 19 + Tailwind CSS + Shadcn UI + Framer Motion + Lenis
+- **Backend:** FastAPI + Motor (async MongoDB)
+- **Auth:** JWT email/password (bcrypt) — admin only
+- **Email:** Emergent-managed Resend (from name: "Kingsford Metals")
+
+## Environments
+
+- **Preview (dev):** `https://fabrication-quotes.preview.emergentagent.com`
+- **Production:** `https://bernatsolutions.com`
+
+## Key API Endpoints
+
+- `GET /health` — unprefixed k8s readiness probe (do **not** remove)
+- `GET /api/health` — application health
+- `POST /api/quotes` — quote submission with file uploads → DB + email
+- `POST /api/contact` — contact form → DB + email
+- `POST /api/auth/login` — JWT session issuance
+- `POST /api/auth/change-password` — authenticated password rotation
+- `POST /api/auth/logout` / `GET /api/auth/me`
+- `GET/PATCH/DELETE /api/admin/quotes[...]` — protected admin routes
+- `GET /api/admin/messages`
+
+## What's Been Implemented
+
+### 2025-Q4 — MVP
+- Initial site build (Home / Services / Industries / About / Quote / Contact
+  / Privacy / Terms / Login / Admin)
+- Quote form with drag-and-drop drawing uploads, MongoDB persistence
+- Mobile responsive design, robots.txt, sitemap.xml, ErrorBoundary
+- Emergent-managed Resend integration for quote + contact email
+  notifications
+- Custom JWT email/password admin authentication (migrated away from
+  Google OAuth)
+- Kubernetes readiness probe fix (`/health` unprefixed)
+
+### 2026-08-07 — Change Password
+- `POST /api/auth/change-password` (verify current, min 8 chars, invalidate
+  other sessions)
+- Admin dashboard modal with show/hide toggles and confirm field
+- Seed function updated to preserve custom passwords across restarts
+
+### 2026-08-07 — Top Email Banner
+- Fixed 36px announcement banner above the nav with mailto CTA
+- Sub-line offset adjusted on Hero + PageHero (68px → 104px total)
+- Adaptive copy for mobile (compact) and desktop (full sales copy)
+
+### 2026-08-11 — Kingsford Metals Rebrand
+- Full customer-facing rename Bernat Solutions → Kingsford Metals
+- Colour swap orange (`#ff5a1f`) → dark British green (`#2f5d3a`);
+  updated tailwind tokens, CSS variables, shadcn accent HSL, spotlight,
+  checkbox accent-colour and backend email HTML accents
+- Stacked wordmark logo ("KM" mark + KINGSFORD / METALS) across
+  Nav / Footer / Login / Admin — replaces the old favicon-based logo
+- Copy rewrite: Home hero ("Metalwork Made Simple."), About page,
+  Services, Industries, Quote, CTASection, BackupBlock, BenefitsGrid,
+  IndustryChips, ManifestoChapters, MaterialsStrip, CapabilitiesStrip
+- "Supplier network" language removed per direction (not positioned as a
+  broker); replaced with direct "one supplier" phrasing
+- SEO: page title, meta description, meta keywords, Open Graph updated
+- Legal disclaimer added to Footer + Terms + Privacy: "Kingsford Metals
+  is a trading name of Bernat Solutions Ltd."
+- Nav label "Services" → "Capabilities" (route `/services` unchanged)
+- Nav main CTA remains "REQUEST A QUOTE"
+- Backend rebranded internally: FastAPI title, email HTML templates,
+  from-name, admin seed name (existing DB records preserved)
+- Full-site smoke tested (Home, Services, Industries, About, Contact,
+  Quote, Login, Admin, mobile menu)
+
+## Roadmap (Next Priorities)
+
+### P1 — Admin polish
+- Search + status filter on the admin quotes table
+- CSV export of quotes
+- Password reset via email (forgot password flow)
+
+### P2 — Marketing / SEO
+- Case Studies page (past jobs with photos + processes used)
+- Testimonials section on Home
+- Google Analytics / Plausible tag
+- Per-page SEO structured data (Organization / LocalBusiness / Service)
+
+### P3 — Nice-to-haves
+- Favicon swap from orange bolt to KM monogram (currently still old
+  favicon.png in `/public` — visible in browser tab only)
+- Simple RFQ acknowledgement autoresponder to the customer
+- FAQ page
+
+## Constraints / Do Not Change
+
+- Never remove `@app.get('/health')` (k8s probe)
+- All URLs, secrets, tokens from `.env` files only
+- Do not modify Emergent-managed Resend integration pipeline
+- Backend seed only sets password on first create (do not force-reset)
+- Frontend uses `REACT_APP_BACKEND_URL`; backend uses `MONGO_URL`
+- The customer's email `alex@bernatsolutions.com` and the production
+  domain `bernatsolutions.com` are correct and intentional (Bernat
+  Solutions Ltd is the parent company)

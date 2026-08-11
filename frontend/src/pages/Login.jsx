@@ -48,8 +48,16 @@ export default function Login() {
         <div data-testid="login-page" className="min-h-screen bg-bg-0 flex flex-col">
             <div className="container-x py-6 flex justify-between items-center border-b border-line">
                 <Link to="/" className="flex items-center gap-3 font-display uppercase tracking-tight">
-                    <img src="/favicon.png" alt="Bernat Solutions" className="w-7 h-7 object-contain" />
-                    <span className="text-lg font-semibold text-ink">Bernat Solutions</span>
+                    <span
+                        aria-hidden
+                        className="w-8 h-8 border border-brand flex items-center justify-center text-brand font-display text-[13px] font-semibold tracking-widest"
+                    >
+                        KM
+                    </span>
+                    <span className="flex flex-col leading-[0.95] font-semibold">
+                        <span className="text-[15px] tracking-widest text-ink">KINGSFORD</span>
+                        <span className="text-[11px] tracking-[0.32em] text-ink-2">METALS</span>
+                    </span>
                 </Link>
                 <Link
                     to="/"
@@ -80,7 +88,7 @@ export default function Login() {
                         <div className="overline brand mb-4">Admin</div>
                         <h1 className="h-display text-4xl text-ink mb-4">Sign in</h1>
                         <p className="text-ink-2 text-sm leading-relaxed mb-8">
-                            Restricted to Bernat Solutions team accounts. Enter your admin
+                            Restricted to Kingsford Metals team accounts. Enter your admin
                             email and password to view submitted quotes and messages.
                         </p>
 

@@ -35,11 +35,11 @@ export default function BackupBlock() {
                     className="lg:col-span-6 lg:col-start-7"
                 >
                     <p className="text-lg md:text-xl text-ink-2 leading-relaxed">
-                        Instead of chasing separate suppliers for cutting, folding, welding,
-                        finishing and delivery, Bernat Solutions gives you one clear point of
-                        contact. We review the job, understand the drawings, source the right
-                        process, request pricing and keep the enquiry moving from quote to
-                        delivery.
+                        Rather than chasing separate suppliers for cutting, folding, welding,
+                        finishing and delivery, Kingsford Metals gives you one reliable point
+                        of contact. We review the drawings, coordinate the manufacturing
+                        route, confirm pricing and keep the job moving from enquiry through
+                        to delivery.
                     </p>
 
                     <div className="mt-10 flex flex-wrap items-center gap-6">
@@ -53,7 +53,7 @@ export default function BackupBlock() {
                         </Link>
                         <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-ink-3">
                             <span className="w-2 h-2 rotate-45 bg-brand" />
-                            Useful as a backup or main supplier
+                            Suitable as a main or backup supplier
                         </div>
                     </div>
                 </motion.div>

@@ -32,7 +32,7 @@ export default function MaterialsStrip() {
                             Materials
                         </div>
                         <h2 className="h-display text-3xl md:text-4xl text-ink max-w-[24ch]">
-                            Materials our supplier network can source and process.
+                            Materials we regularly source and process.
                         </h2>
                     </motion.div>
                     <motion.p

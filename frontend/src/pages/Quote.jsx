@@ -4,11 +4,11 @@ import QuoteForm from '@/components/QuoteForm';
 import { CONTACT } from '@/lib/constants';
 
 const TRUST_POINTS = [
-    'Access to laser cutting, tube laser, waterjet, flame, plasma, folding, welding, fabrication and finishing',
-    'Vetted UK supplier network — jobs matched to the right process and shop',
-    'One person owns the enquiry from drawing to delivery',
+    'Laser cutting, tube & section cutting, heavy plate profiling, folding, fabrication, welding and finishing — under one supplier',
+    'Every enquiry reviewed by someone who reads drawings properly',
+    'One point of contact from quotation through to delivery',
     'PDF, DXF, DWG, STEP, STL, images and ZIP packs — all accepted',
-    'Useful as a backup, second-quote or main supplier',
+    'Suitable as a main or backup metalwork supplier',
 ];
 
 export default function Quote() {
@@ -16,8 +16,8 @@ export default function Quote() {
         <div data-testid="quote-page">
             <PageHero
                 overline="Request a Quote"
-                title={['Send us the job.', 'We’ll source', 'the right route.']}
-                subtitle="Send your drawings and we’ll help source the right process, price and supplier route for the job. If you only have a drawing and a delivery date — that’s enough to get started."
+                title={['Send us the job.', 'One supplier,', 'quoted and delivered.']}
+                subtitle="Send your drawings and we'll come back with a competitive quotation covering the full job — cutting, folding, fabrication, welding and finishing where required. A drawing and a delivery date are enough to get started."
                 image="https://images.unsplash.com/photo-1581093806997-124204d9fa9d"
             />
 

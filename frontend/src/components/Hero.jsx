@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowUpRight, ArrowDown, Upload } from 'lucide-react';
+import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import RevealLines from '@/components/RevealText';
 
 export default function Hero() {
@@ -54,24 +54,18 @@ export default function Hero() {
                     className="flex items-center gap-3 overline brand mb-8"
                 >
                     <span className="inline-block w-8 h-px bg-brand" />
-                    <span>UK Supplier Network · Cutting · Fabrication · Finishing</span>
+                    <span>Laser Cutting · Folding · Fabrication · Welding</span>
                 </motion.div>
 
                 <RevealLines
                     as="h1"
                     lines={[
-                        <span key="l1">Steel, Laser Cutting&nbsp;</span>,
-                        <span key="l2">
-                            &amp; Fabrication{' '}
-                            <span className="text-brand italic font-normal">Without</span>{' '}
-                        </span>,
-                        <span key="l3">
-                            the <span className="text-outline-strong">Usual Hassle</span>.
-                        </span>,
+                        <span key="l1">Metalwork&nbsp;</span>,
+                        <span key="l2">Made <span className="text-brand italic font-normal">Simple.</span></span>,
                     ]}
-                    className="h-display text-[clamp(2rem,9vw,7.5rem)] font-semibold text-ink max-w-[16ch]"
+                    className="h-display text-[clamp(2.4rem,9vw,7.5rem)] font-semibold text-ink max-w-[14ch]"
                     lineClassName=""
-                    ariaLabel="Steel, Laser Cutting & Fabrication Without the Usual Hassle."
+                    ariaLabel="Metalwork Made Simple."
                 />
 
                 <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
@@ -81,10 +75,10 @@ export default function Hero() {
                         transition={{ delay: 0.9, duration: 0.7 }}
                         className="lg:col-span-6 text-ink-2 text-lg sm:text-xl leading-relaxed max-w-[52ch]"
                     >
-                        Bernat Solutions helps UK businesses source and manage laser cutting,
-                        steel profiling, folding, fabrication and finishing work through a
-                        trusted supplier network. Send your drawings, tell us what you need,
-                        and we&apos;ll help get the job quoted and moving.
+                        Reliable UK metalwork supply with one point of contact from quotation
+                        through to delivery. Kingsford Metals handles laser cutting, folding,
+                        fabrication, welding and finishing — so you deal with one supplier,
+                        not five.
                     </motion.p>
 
                     <motion.div
@@ -102,12 +96,12 @@ export default function Hero() {
                             <ArrowUpRight size={18} strokeWidth={2.4} />
                         </Link>
                         <Link
-                            to="/quote"
-                            data-testid="hero-cta-drawings"
+                            to="/services"
+                            data-testid="hero-cta-capabilities"
                             className="inline-flex items-center justify-center gap-3 px-7 py-4 border border-line-strong text-ink text-sm font-semibold uppercase tracking-widest hover:border-brand hover:text-brand transition-colors"
                         >
-                            <Upload size={16} />
-                            Send Your Drawings
+                            View Capabilities
+                            <ArrowUpRight size={16} />
                         </Link>
                     </motion.div>
                 </div>
@@ -120,7 +114,7 @@ export default function Hero() {
                 >
                     <div className="flex items-center gap-3">
                         <span className="w-2 h-2 rounded-none bg-brand animate-blink" />
-                        <span>Currently quoting UK-wide · Nottinghamshire based</span>
+                        <span>Quoting UK-wide · Nottinghamshire based</span>
                     </div>
                     <div className="hidden md:flex items-center gap-2 text-ink-2">
                         Scroll <ArrowDown size={14} />

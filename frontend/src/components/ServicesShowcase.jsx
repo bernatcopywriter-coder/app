@@ -22,8 +22,8 @@ export default function ServicesShowcase() {
                             <span className="text-outline">Every process covered.</span>
                         </h2>
                         <p className="mt-6 max-w-xl text-ink-2 text-base leading-relaxed">
-                            Cutting, profiling, folding, fabrication and finishing —
-                            sourced and managed through our UK supplier network.
+                            Cutting, folding, fabrication, welding and finishing —
+                            coordinated and delivered under one supplier.
                         </p>
                     </div>
                     <Link

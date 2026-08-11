@@ -24,12 +24,12 @@ export default function Nav() {
         <>
             {/* Top announcement banner — drives direct email enquiries */}
             <a
-                href={`mailto:${CONTACT.email}?subject=Enquiry%20via%20Bernat%20Solutions`}
+                href={`mailto:${CONTACT.email}?subject=Enquiry%20via%20Kingsford%20Metals`}
                 data-testid="top-email-banner"
                 className="group fixed inset-x-0 top-0 z-[60] h-9 flex items-center justify-center gap-3 bg-brand text-white text-[11px] sm:text-xs uppercase tracking-widest font-semibold border-b border-black/20 hover:bg-brand-hover transition-colors px-4"
             >
                 <Mail size={14} strokeWidth={2.4} className="shrink-0" />
-                <span className="hidden sm:inline">Fast, no-obligation quotes —</span>
+                <span className="hidden sm:inline">Reliable UK metalwork —</span>
                 <span className="truncate">
                     Email <span className="underline underline-offset-2">{CONTACT.email}</span>
                 </span>
@@ -58,12 +58,16 @@ export default function Nav() {
                         data-testid="nav-logo"
                         className="group flex items-center gap-3 font-display uppercase tracking-tight text-ink"
                     >
-                        <img
-                            src="/favicon.png"
-                            alt="Bernat Solutions"
-                            className="w-8 h-8 object-contain"
-                        />
-                        <span className="text-[17px] font-semibold leading-none">Bernat Solutions</span>
+                        <span
+                            aria-hidden
+                            className="w-8 h-8 border border-brand flex items-center justify-center text-brand font-display text-[13px] font-semibold leading-none tracking-widest"
+                        >
+                            KM
+                        </span>
+                        <span className="flex flex-col leading-[0.95] font-semibold text-ink">
+                            <span className="text-[15px] tracking-widest">KINGSFORD</span>
+                            <span className="text-[11px] tracking-[0.32em] text-ink-2">METALS</span>
+                        </span>
                     </Link>
 
                     <nav className="hidden md:flex items-center gap-8">

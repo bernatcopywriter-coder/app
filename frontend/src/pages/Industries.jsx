@@ -25,7 +25,7 @@ export default function Industries() {
             <PageHero
                 overline="Industries"
                 title={['Sectors', 'we serve.']}
-                subtitle="Bernat Solutions supports UK businesses that build, maintain and manufacture. Whatever the sector — the standards, the drawings and the communication stay the same."
+                subtitle="Kingsford Metals supports UK businesses that build, maintain and manufacture. Whatever the sector, the standards, drawings and communication stay consistent."
                 image="https://images.unsplash.com/photo-1496247749665-49cf5b1022e9"
             />
 
