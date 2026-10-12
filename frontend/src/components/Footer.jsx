@@ -123,7 +123,15 @@ export default function Footer() {
                             Kingsford Metals is a trading name of Bernat Solutions Ltd.
                         </span>
                     </div>
-                    <div className="flex gap-6">
+                    <div className="flex flex-wrap gap-6 items-center">
+                        <Link
+                            className="hover:text-ink"
+                            to="/peakline"
+                            data-testid="footer-peakline-link"
+                        >
+                            Peakline Exterior Cleaning
+                        </Link>
+                        <span className="hidden md:inline text-line-strong">·</span>
                         <Link className="hover:text-ink" to="/privacy">Privacy Policy</Link>
                         <Link className="hover:text-ink" to="/terms">Terms</Link>
                     </div>

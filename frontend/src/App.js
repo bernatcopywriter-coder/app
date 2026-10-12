@@ -21,6 +21,7 @@ import NotFound from '@/pages/NotFound';
 import Login from '@/pages/Login';
 import AuthCallback from '@/pages/AuthCallback';
 import Admin from '@/pages/Admin';
+import Peakline from '@/pages/Peakline';
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -117,6 +118,9 @@ function AppRouter() {
             {/* Auth + admin — no site layout */}
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<Admin />} />
+
+            {/* Standalone — separate business, no shared layout */}
+            <Route path="/peakline" element={<Peakline />} />
 
             {/* 404 */}
             <Route
